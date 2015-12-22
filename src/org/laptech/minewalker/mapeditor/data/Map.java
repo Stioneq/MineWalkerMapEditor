@@ -10,4 +10,7 @@ import java.util.List;
  */
 public class Map {
     private List<GameObject> objects;
+    public List<GameObject> getObjects() {
+        return objects;
+    }
 }
