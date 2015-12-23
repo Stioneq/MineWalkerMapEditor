@@ -16,5 +16,6 @@ public class EditorArea extends JPanel{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(BGCOLOR);
+        g.fillRect(0,0,getWidth(),getHeight());
     }
 }

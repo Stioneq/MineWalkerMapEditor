@@ -22,7 +22,7 @@ public class ToolFactory {
 
     /**
      *
-     * @return selection tool which is used for selecting map objects
+     * @return floor tool which is used for selecting map objects
      */
     public Tool createFloorTool(){
         return new FloorTool(editorController);

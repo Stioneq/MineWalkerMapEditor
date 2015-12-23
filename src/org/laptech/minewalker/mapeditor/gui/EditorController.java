@@ -9,8 +9,10 @@ import org.laptech.minewalker.mapeditor.data.io.XMLWriter;
  */
 public class EditorController {
     private Map map;
+    private MainWindow mainWindow;
 
-    public EditorController() {
+    public EditorController(MainWindow window) {
+        this.mainWindow = window;
         map = new Map();
     }
 
