@@ -32,6 +32,7 @@ public class MainWindow {
         editorArea = new EditorArea();
         toolsPane = new ToolsPane(controller);
         frame.add(editorArea,BorderLayout.CENTER);
+        frame.add(toolsPane,BorderLayout.EAST);
 
     }
 

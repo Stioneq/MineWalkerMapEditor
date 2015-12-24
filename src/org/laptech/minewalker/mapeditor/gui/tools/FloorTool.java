@@ -6,6 +6,7 @@ import org.laptech.minewalker.mapeditor.gui.EditorController;
 
 import javax.imageio.ImageIO;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -22,6 +23,7 @@ public class FloorTool extends GameObjectTool {
         super(editorController);
         try {
             image = ImageIO.read(SelectionTool.class.getClassLoader().getResourceAsStream(IMAGE_PATH));
+            
         } catch (IOException e) {
             LOGGER.severe("Cannot load image "+ IMAGE_PATH);
         }
