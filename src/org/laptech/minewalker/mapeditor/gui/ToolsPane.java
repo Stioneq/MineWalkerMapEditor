@@ -65,6 +65,7 @@ public class ToolsPane extends JPanel{
         button.setBackground(new Color(114, 114, 114,255));
         button.setSize(BTN_SIZE);
         button.setIcon(imageIcon);
+        button.setToolTipText(tool.getTooltip());
         button.addActionListener(event -> listener.onToolChanged(tool));
         return button;
     }
