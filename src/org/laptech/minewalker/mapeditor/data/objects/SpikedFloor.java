@@ -5,16 +5,19 @@ import java.awt.Graphics;
 
 /**
  * Spiked Floor object
+ *
  * @author rlapin
  */
-public class SpikedFloor extends GameObject{
-    public static final Color BGCOLOR = new Color(88, 37, 36,255);
-    public SpikedFloor(int x, int y, int width, int height) {
+public class SpikedFloor extends GameObject {
+    public static final Color BGCOLOR = new Color(88, 37, 36, 255);
+
+    public SpikedFloor(double x, double y, double width, double height) {
         super(x, y, width, height);
     }
+
     @Override
     public void draw(Graphics g) {
         g.setColor(BGCOLOR);
-        g.fillRect(getX(),getY(),getWidth(),getHeight());
+       // g.fillRect(getX(), getY(), getWidth(), getHeight());
     }
 }

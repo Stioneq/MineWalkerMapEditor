@@ -34,7 +34,7 @@ public class SelectionTool implements Tool{
     }
 
     @Override
-    public void apply(int x, int y, int width, int height) {
+    public void apply(double x, double y, double width, double height) {
 
     }
 

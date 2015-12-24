@@ -16,7 +16,7 @@ public class Door extends GameObject {
      */
     private boolean isOpened;
 
-    public Door(int x, int y, int width, int height, boolean isOpened) {
+    public Door(double x, double y, double width, double height, boolean isOpened) {
         super(x, y, width, height);
         this.isOpened = isOpened;
     }
@@ -33,12 +33,12 @@ public class Door extends GameObject {
     public void draw(Graphics g) {
 
         g.setColor(BGCOLOR);
-        g.fillRect(getX(), getY(), getWidth(), getHeight());
-        int innerX = getX() + getWidth() / 4;
-        int innerY = getY() + getHeight() / 4;
-        int innerWidth = getWidth() / 2;
-        int innerHeight = getHeight() / 2;
+        // g.fillRect(getX(), getY(), getWidth(), getHeight());
+        double innerX = getX() + getWidth() / 4;
+        double innerY = getY() + getHeight() / 4;
+        double innerWidth = getWidth() / 2;
+        double innerHeight = getHeight() / 2;
         g.setColor(INNERCOLOR);
-        g.fillRect(innerX, innerY, innerWidth, innerHeight);
+        //g.fillRect(innerX, innerY, innerWidth, innerHeight);
     }
 }

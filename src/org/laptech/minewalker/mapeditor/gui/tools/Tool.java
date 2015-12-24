@@ -8,5 +8,5 @@ import java.awt.Image;
 public interface Tool {
     Image getToolIcon();
     String getTooltip();
-    void apply(int x, int y, int width, int height);
+    void apply(double x, double y, double width, double height);
 }

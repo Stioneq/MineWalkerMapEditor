@@ -22,11 +22,17 @@ public class ToolFactory {
 
     /**
      *
-     * @return floor tool which is used for selecting map objects
+     * @return floor tool which is used for creating floor objects
      */
     public Tool createFloorTool(){
         return new FloorTool(editorController);
     }
 
-
+    /**
+     *
+     * @return wall tool which is used for creating wall objects
+     */
+    public Tool createWallTool(){
+        return new WallTool(editorController);
+    }
 }
