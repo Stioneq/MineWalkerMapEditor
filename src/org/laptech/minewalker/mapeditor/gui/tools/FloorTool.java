@@ -17,6 +17,7 @@ import static java.util.logging.Logger.getLogger;
 public class FloorTool extends GameObjectTool {
     private static final Logger LOGGER = getLogger(SelectionTool.class.getName());
     public static final String IMAGE_PATH = "images/floortool.png";
+    public static final String TYPE = "floor";
     private Image image;
     public FloorTool(EditorController editorController) {
         super(editorController);
@@ -42,4 +43,10 @@ public class FloorTool extends GameObjectTool {
     public String getTooltip() {
         return "Basic Floor tool";
     }
+
+    @Override
+    public String getType() {
+        return TYPE;
+    }
+
 }

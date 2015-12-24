@@ -1,5 +1,8 @@
 package org.laptech.minewalker.mapeditor.gui;
 
+import org.laptech.minewalker.mapeditor.gui.tools.Tool;
+import org.laptech.minewalker.mapeditor.gui.tools.ToolChangeListener;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.WindowConstants;
@@ -31,17 +34,38 @@ public class MainWindow {
         frame.add(createMenuBar(), BorderLayout.NORTH);
         editorArea = new EditorArea();
         toolsPane = new ToolsPane(controller);
-        frame.add(editorArea,BorderLayout.CENTER);
+        toolsPane.addToolChangeListener(new ToolChangeListener() {
+            @Override
+            public void onToolChanged(Tool tool) {
+                editorArea.setCurrentTool(tool);
+            }
+        });
+        frame.add(editorArea, BorderLayout.CENTER);
         frame.add(toolsPane,BorderLayout.EAST);
 
     }
 
     private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-        menuBar.add(MenuFactory.createFileMenu());
-        menuBar.add(MenuFactory.createEditMenu());
-        menuBar.add(MenuFactory.createHelpMenu());
+        menuBar.add(MenuFactory.createFileMenu(controller));
+        menuBar.add(MenuFactory.createEditMenu(controller));
+        menuBar.add(MenuFactory.createViewMenu(controller));
+        menuBar.add(MenuFactory.createHelpMenu(controller));
         return menuBar;
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public EditorArea getEditorArea() {
+        return editorArea;
+    }
+
+
+
+    public ToolsPane getToolsPane() {
+        return toolsPane;
     }
 
     public void show(){

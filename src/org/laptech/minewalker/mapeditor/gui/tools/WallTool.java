@@ -18,6 +18,7 @@ import static java.util.logging.Logger.getLogger;
 public class WallTool extends GameObjectTool {
     private static final Logger LOGGER = getLogger(SelectionTool.class.getName());
     public static final String IMAGE_PATH = "images/walltool.png";
+    public static final String TYPE = "wall";
     private Image image;
     public WallTool(EditorController editorController) {
         super(editorController);
@@ -42,5 +43,10 @@ public class WallTool extends GameObjectTool {
     @Override
     public String getTooltip() {
         return "Basic wall tool";
+    }
+
+    @Override
+    public String getType() {
+        return TYPE;
     }
 }

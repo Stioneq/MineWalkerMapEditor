@@ -5,10 +5,13 @@ import org.laptech.minewalker.mapeditor.gui.tools.ToolChangeListener;
 import org.laptech.minewalker.mapeditor.gui.tools.ToolFactory;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -19,6 +22,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Panel with tools and their configration
@@ -27,8 +32,9 @@ import java.awt.image.BufferedImage;
  */
 public class ToolsPane extends JPanel {
     public static final Color ROLLOVER_COLOR = new Color(120, 255, 120, 50);
-    private static final Color PRESSED_COLOR = new Color(120, 255, 120, 100);;
-    private ToolChangeListener listener;
+    private static final Color PRESSED_COLOR = new Color(120, 255, 120, 100);
+    ;
+    private List<ToolChangeListener> listeners = new ArrayList<>();
 
     public static final Dimension BTN_SIZE = new Dimension(32, 32);
     private EditorController controller;
@@ -37,7 +43,7 @@ public class ToolsPane extends JPanel {
     public ToolsPane(EditorController controller) {
         super(true);
         setOpaque(true);
-        setBackground(new Color(80,80,80,255));
+        setBackground(new Color(80, 80, 80, 255));
         this.controller = controller;
         initComponents();
     }
@@ -55,6 +61,7 @@ public class ToolsPane extends JPanel {
 
     /**
      * Create panel for settings tools
+     *
      * @return create {@link SettingsPanel}
      */
     private JPanel createSettingsPanel() {
@@ -65,6 +72,7 @@ public class ToolsPane extends JPanel {
 
     /**
      * Create panel with tools and label at the top
+     *
      * @return panel that contains two panel, one label panel and panel with tools
      */
     private JPanel createToolsPanel() {
@@ -74,28 +82,31 @@ public class ToolsPane extends JPanel {
         panel.setOpaque(true);
         panel.setBackground(Color.GRAY);
         JPanel contentPanel = createContentPanel();
-        panel.add(contentPanel,BorderLayout.CENTER);
+        panel.add(contentPanel, BorderLayout.CENTER);
         return panel;
     }
 
     /**
      * Create panel with tools
+     *
      * @return panel with tools
      */
     private JPanel createContentPanel() {
-        JPanel contentPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,5,5));
+        JPanel contentPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
         ToolFactory factory = new ToolFactory(controller);
         contentPanel.setOpaque(true);
+        ButtonGroup group = new ButtonGroup();
         Color bgColor = new Color(204, 204, 204);
         contentPanel.setBackground(bgColor);
-        contentPanel.add(createToolButton(factory.createFloorTool()));
-        contentPanel.add(createToolButton(factory.createSelectionTool()));
-        contentPanel.add(createToolButton(factory.createWallTool()));
+        contentPanel.add(createToolButton(factory.createFloorTool(),group));
+        contentPanel.add(createToolButton(factory.createSelectionTool(),group));
+        contentPanel.add(createToolButton(factory.createWallTool(),group));
         return contentPanel;
     }
 
     /**
      * Create lane with label containing definite text
+     *
      * @param text text of label
      * @return JPanel
      */
@@ -112,12 +123,14 @@ public class ToolsPane extends JPanel {
     }
 
     /**
-     * Create button for exact Tool
+     * Create button for exact Tool and add it to buttongroup
+     *
      * @param tool tool that used for button
+     * @param group
      * @return ImageButton
      */
-    private Component createToolButton(Tool tool) {
-        JButton button = new JButton();
+    private Component createToolButton(Tool tool, ButtonGroup group) {
+        JToggleButton button = new JToggleButton();
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createEmptyBorder());
@@ -126,16 +139,29 @@ public class ToolsPane extends JPanel {
 
         button.setSize(BTN_SIZE);
         button.setIcon(imageIcon);
+
         button.setRolloverIcon(new ImageIcon(createRollOverImage(image).getScaledInstance(BTN_SIZE.width, BTN_SIZE.height, Image.SCALE_FAST)));
         button.setPressedIcon(new ImageIcon(createPressedImage(image).getScaledInstance(BTN_SIZE.width, BTN_SIZE.height, Image.SCALE_FAST)));
+        button.setSelectedIcon(button.getPressedIcon());
         button.setToolTipText(tool.getTooltip());
-        button.addActionListener(event -> listener.onToolChanged(tool));
+        button.addActionListener(event -> {
+            for (ToolChangeListener listener : listeners) listener.onToolChanged(tool);
+            /*for(Component component :button.getParent().getComponents()){
+                if(component!=button){
+                    if(component instanceof JToggleButton){
+                        ((JToggleButton)component).setSelected(false);
+                    }
+                }
+            }*/
+        });
+        group.add(button);
         return button;
     }
 
     /**
      * Create image from existing icon image. That image will used for pressed button state.<br>
      * Main idea is adding new layer hovering input image
+     *
      * @param image Input image
      * @return Image
      */
@@ -147,9 +173,11 @@ public class ToolsPane extends JPanel {
         g.fillRect(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight());
         return bufferedImage;
     }
+
     /**
      * Create image from existing icon image. That image will used for roolover button state.<br>
      * Main idea is adding new layer hovering input image
+     *
      * @param image Input image
      * @return Image
      */
@@ -160,5 +188,13 @@ public class ToolsPane extends JPanel {
         g.setColor(ROLLOVER_COLOR);
         g.fillRect(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight());
         return bufferedImage;
+    }
+
+    /**
+     * Add tool changelistener
+     * @param listener toolchange listener
+     */
+    public void addToolChangeListener(ToolChangeListener listener) {
+        listeners.add(listener);
     }
 }

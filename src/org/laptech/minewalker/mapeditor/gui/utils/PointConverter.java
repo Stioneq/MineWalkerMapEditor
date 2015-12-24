@@ -30,8 +30,8 @@ public class PointConverter {
     }
 
     public void updateMultipliers(int width, int height, Rectangle mapBounds) {
-        kX = (mapBounds.getWidth()-mapBounds.getX())/width;
-        kY = (mapBounds.getHeight()-mapBounds.getY())/height;
+        kX = (mapBounds.getWidth())/width;
+        kY = (mapBounds.getHeight())/height;
         offsetX = mapBounds.getX();
         offsetY = mapBounds.getY();
     }

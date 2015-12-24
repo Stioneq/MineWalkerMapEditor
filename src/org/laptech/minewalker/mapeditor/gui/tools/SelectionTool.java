@@ -1,6 +1,7 @@
 package org.laptech.minewalker.mapeditor.gui.tools;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import java.awt.Image;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -13,6 +14,7 @@ import static java.util.logging.Logger.getLogger;
 public class SelectionTool implements Tool{
     private static final Logger LOGGER = getLogger(SelectionTool.class.getName());
     public static final String IMAGE_PATH = "images/selectiontool.png";
+    public static final String TYPE = "selection";
     private Image image;
 
     public SelectionTool() {
@@ -36,6 +38,11 @@ public class SelectionTool implements Tool{
     @Override
     public void apply(double x, double y, double width, double height) {
 
+    }
+
+    @Override
+    public String getType() {
+        return TYPE;
     }
 
 
