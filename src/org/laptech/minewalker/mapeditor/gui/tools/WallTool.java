@@ -5,6 +5,8 @@ import org.laptech.minewalker.mapeditor.data.objects.Wall;
 import org.laptech.minewalker.mapeditor.gui.EditorController;
 
 import javax.imageio.ImageIO;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -48,5 +50,11 @@ public class WallTool extends GameObjectTool {
     @Override
     public String getType() {
         return TYPE;
+    }
+
+    @Override
+    public void draw(Graphics g, int x, int y, int width, int height) {
+
+        g.drawImage(image, x, y, width, height, null);
     }
 }

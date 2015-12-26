@@ -15,9 +15,5 @@ public class Wall extends GameObject {
         super(x, y, width, height);
     }
 
-    @Override
-    public void draw(Graphics g) {
-        g.setColor(BGCOLOR);
-   //     g.fillRect(getX(), getY(), getWidth(), getHeight());
-    }
+
 }

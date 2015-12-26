@@ -10,15 +10,38 @@ import org.laptech.minewalker.mapeditor.gui.EditorController;
  */
 public abstract class GameObjectTool implements Tool {
     private EditorController editorController;
-
+    private double width = 50;
+    private double height = 50;
     public GameObjectTool(EditorController editorController) {
         this.editorController = editorController;
     }
 
     @Override
     public void apply(double x, double y, double width, double height) {
-        editorController.getMap().getObjects().add(getObject(x,y,width,height));
+        editorController.getMap().getObjects().add(getObject(x,y,getWidth(),getHeight()).with(this));
+    }
+
+    @Override
+    public void apply(double x, double y) {
+        apply(x, y, getWidth(), getHeight());
     }
 
     public abstract GameObject getObject(double x, double y, double width, double height);
+
+    public double getWidth() {
+        return width;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
 }

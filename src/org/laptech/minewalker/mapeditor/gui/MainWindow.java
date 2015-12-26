@@ -32,7 +32,7 @@ public class MainWindow {
     private void initComponents() {
         frame.setLayout(new BorderLayout());
         frame.add(createMenuBar(), BorderLayout.NORTH);
-        editorArea = new EditorArea();
+        editorArea = new EditorArea(this);
         toolsPane = new ToolsPane(controller);
         toolsPane.addToolChangeListener(new ToolChangeListener() {
             @Override
@@ -41,7 +41,7 @@ public class MainWindow {
             }
         });
         frame.add(editorArea, BorderLayout.CENTER);
-        frame.add(toolsPane,BorderLayout.EAST);
+        frame.add(toolsPane, BorderLayout.EAST);
 
     }
 
@@ -70,5 +70,9 @@ public class MainWindow {
 
     public void show(){
         frame.setVisible(true);
+    }
+
+    public EditorController getController() {
+        return controller;
     }
 }

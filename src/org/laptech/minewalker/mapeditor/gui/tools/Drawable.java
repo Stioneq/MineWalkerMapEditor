@@ -1,4 +1,4 @@
-package org.laptech.minewalker.mapeditor.data.objects;
+package org.laptech.minewalker.mapeditor.gui.tools;
 
 import java.awt.Graphics;
 
@@ -10,6 +10,12 @@ public interface Drawable {
     /**
      * Draw object
      * @param g Graphics context
+     * @param x
+     * @param y
+     * @param width
+     * @param height
      */
-    void draw(Graphics g);
+    void draw(Graphics g, int x, int y, int width, int height);
+
+
 }

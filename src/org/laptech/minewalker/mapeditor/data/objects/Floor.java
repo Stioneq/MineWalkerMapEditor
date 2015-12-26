@@ -12,9 +12,5 @@ public class Floor extends GameObject{
     public Floor(double x,double  y, double  width, double  height) {
         super(x, y, width, height);
     }
-    @Override
-    public void draw(Graphics g) {
-        g.setColor(BGCOLOR);
-        //g.fillRect((int)getX(),getY(),getWidth(),getHeight());
-    }
+
 }

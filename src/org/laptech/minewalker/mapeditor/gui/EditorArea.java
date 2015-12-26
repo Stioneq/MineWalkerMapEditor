@@ -1,5 +1,6 @@
 package org.laptech.minewalker.mapeditor.gui;
 
+import org.laptech.minewalker.mapeditor.data.objects.GameObject;
 import org.laptech.minewalker.mapeditor.gui.tools.EmptyTool;
 import org.laptech.minewalker.mapeditor.gui.tools.GameObjectTool;
 import org.laptech.minewalker.mapeditor.gui.tools.SelectionTool;
@@ -13,11 +14,14 @@ import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -32,9 +36,26 @@ public class EditorArea extends JPanel{
     public static final Color BGCOLOR = new Color(37, 37, 39);
     public static final EmptyTool EMPTY_TOOL = new EmptyTool();
     public static final Cursor SEL_CURSOR = new Cursor(Cursor.CROSSHAIR_CURSOR);
-    public static final Color SEL_FGCOLOR = new Color(255, 0, 0, 255);
-    public static final Color SEL_BGCOLOR = new Color(100, 200, 100, 50);
-    private static final int TEMP_SIZE = 50;
+
+    //Fields used in displaying gameobject tool brush
+    private boolean isDrawBrush = false;
+    /**
+     * Used while displaying game object brush
+     */
+    private static Cursor blankCursor;
+    static {
+        blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB), new Point(0, 0), "blank");
+    }
+
+    /**
+     * Tool width if it is a gameobjectool in screen units
+     */
+    private int toolWidth;
+    /**
+     * Tool height if it is a gameobjectool in screen units
+     */
+    private int toolHeight;
+    // END
     private boolean isShowGrid = true;
     private boolean isDragged;
     private PointConverter pointConverter;
@@ -45,7 +66,7 @@ public class EditorArea extends JPanel{
     /**
      * Position and size of adding item , just to preview display
      */
-    private Rectangle brushObject = new Rectangle(TEMP_SIZE,TEMP_SIZE);
+    private Point brushPoint = new Point();
     /**
      * Rectangle is using as selection region
      */
@@ -54,14 +75,18 @@ public class EditorArea extends JPanel{
      * True if user is selected region in this moment
      */
     private boolean isSelection;
+    private MainWindow mainWindow;
 
-    public EditorArea() {
+
+    public EditorArea(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
         pointConverter = new PointConverter();
         initListeners();
 
     }
 
     private void initListeners() {
+
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -75,7 +100,23 @@ public class EditorArea extends JPanel{
                 }
                 if(isSelectionTool()) {
                     currentTool.apply(selRect.getX(),selRect.getY(),selRect.getWidth(),selRect.getHeight());
+                }else if(isGameObjectTool()){
+                    currentTool.apply(pointConverter.convertXFromScreen(e.getX()-toolWidth/2),pointConverter.convertYFromScreen(e.getY() - toolHeight / 2));
                 }
+
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if(isGameObjectTool()){
+                    isDrawBrush = false;
+                    repaint();
+                }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                isDrawBrush = true;
+                repaint();
             }
         });
         addMouseMotionListener(new MouseMotionAdapter() {
@@ -94,8 +135,7 @@ public class EditorArea extends JPanel{
             public void mouseMoved(MouseEvent e) {
                 super.mouseMoved(e);
                 if(isGameObjectTool()){
-                    brushObject.setLocation(e.getX()-TEMP_SIZE/2,e.getY()-TEMP_SIZE/2);
-
+                    brushPoint.setLocation(e.getX(), e.getY());
                     repaint();
                 }
 
@@ -169,6 +209,11 @@ public class EditorArea extends JPanel{
     private void rangeUpdated() {
         LOGGER.info("MapArea:" + mapBounds);
         pointConverter.updateMultipliers(getWidth(), getHeight(), mapBounds);
+        if(isGameObjectTool()) {
+            GameObjectTool gameObjectTool = (GameObjectTool) currentTool;
+            toolWidth = (int) pointConverter.convertXUnitsToScreen(gameObjectTool.getWidth());
+            toolHeight = (int) pointConverter.convertYUnitsToScreen(gameObjectTool.getHeight());
+        }
         repaint();
     }
 
@@ -177,33 +222,33 @@ public class EditorArea extends JPanel{
         super.paintComponent(g);
         g.setColor(BGCOLOR);
         g.fillRect(0, 0, getWidth(), getHeight());
+        drawMap(g);
         drawGrid(g);
         drawBrush(g);
-
         g.dispose();
+    }
+
+    private void drawMap(Graphics g) {
+        for(GameObject gameObject : mainWindow.getController().getMap().getObjects()){
+            int x = (int) pointConverter.convertXToScreen(gameObject.getX());
+            int y = (int) pointConverter.convertYToScreen(gameObject.getY());
+            int width = (int) pointConverter.convertXUnitsToScreen(gameObject.getWidth());
+            int height = (int) pointConverter.convertYUnitsToScreen(gameObject.getHeight());
+            if(contains(x,y) && contains(x+width,y+width)) {
+                gameObject.getDrawable().draw(g, x,y,width,height);
+            }
+        }
     }
 
     private void drawBrush(Graphics g) {
         if(isSelection) {
-            drawSelection(g);
-        }else if(isGameObjectTool()){
-            drawGameObjectBrush(g);
+            currentTool.draw(g,(int) selRect.getX(), (int) selRect.getY(), (int) selRect.getWidth(), (int) selRect.getHeight());
+        }else if(isDrawBrush && isGameObjectTool()){
+            currentTool.draw(g,(int) brushPoint.getX()-toolWidth/2, (int) brushPoint.getY()-toolHeight/2, toolWidth, toolHeight);
         }
     }
 
-    private void drawGameObjectBrush(Graphics g) {
-        g.setColor(Color.pink);
-        g.fillRect((int) brushObject.getX(), (int) brushObject.getY(), (int) brushObject.getWidth(), (int) brushObject.getHeight());
-        System.out.println(brushObject);
-    }
 
-    private void drawSelection(Graphics g) {
-        g.setColor(SEL_FGCOLOR);
-        g.drawRect((int) selRect.getX(), (int) selRect.getY(), (int) selRect.getWidth(), (int) selRect.getHeight());
-        g.setColor(SEL_BGCOLOR);
-        // Add 1 as innerpadding thats why we substract 2 from width and height
-        g.fillRect((int) selRect.getX() + 1, (int) selRect.getY() + 1, (int) selRect.getWidth() - 2, (int) selRect.getHeight() - 2);
-    }
 
     /**
      * Draw grid if showgrid is on
@@ -269,12 +314,17 @@ public class EditorArea extends JPanel{
         this.currentTool = currentTool;
         if(isSelectionTool()){
             setCursor(SEL_CURSOR);
-        }else{
-            setCursor(Cursor.getDefaultCursor());
+        }else if(isGameObjectTool()){
+            GameObjectTool gameObjectTool = (GameObjectTool) currentTool;
+            toolWidth = (int) pointConverter.convertXUnitsToScreen(gameObjectTool.getWidth());
+            toolHeight = (int) pointConverter.convertYUnitsToScreen(gameObjectTool.getHeight());
+            setCursor(blankCursor);
         }
     }
 
     private boolean isSelectionTool() {
         return Objects.equals(currentTool.getType(), SelectionTool.TYPE);
     }
+
+
 }

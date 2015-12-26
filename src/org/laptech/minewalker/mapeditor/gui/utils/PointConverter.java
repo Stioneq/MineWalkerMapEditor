@@ -66,4 +66,11 @@ public class PointConverter {
     public double getOffsetY() {
         return offsetY;
     }
+
+    public double convertXUnitsToScreen(double value) {
+        return Math.abs(convertXToScreen(value)-convertXToScreen(0));
+    }
+    public double convertYUnitsToScreen(double value) {
+        return Math.abs(convertYToScreen(value)-convertYToScreen(0));
+    }
 }

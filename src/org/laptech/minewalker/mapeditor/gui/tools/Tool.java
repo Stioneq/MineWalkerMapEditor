@@ -5,7 +5,7 @@ import java.awt.Image;
 /**
  * @author rlapin
  */
-public interface Tool {
+public interface Tool extends Drawable {
     Image getToolIcon();
     String getTooltip();
     void apply(double x, double y, double width, double height);
@@ -15,4 +15,11 @@ public interface Tool {
      * @return
      */
     String getType();
+
+    /**
+     * Apply tool to point with x and y (in real units)
+     * @param x value of x in real units
+     * @param y value of y in real units
+     */
+    void apply(double x, double y);
 }

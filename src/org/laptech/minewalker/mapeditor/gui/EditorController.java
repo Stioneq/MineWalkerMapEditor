@@ -16,7 +16,7 @@ public class EditorController {
 
     public EditorController(MainWindow window) {
         this.mainWindow = window;
-        map = new Map();
+        map = new Map(this);
     }
 
 
@@ -50,5 +50,12 @@ public class EditorController {
 
     public void setGridColor(Color color) {
         mainWindow.getEditorArea().setGridColor(color);
+    }
+
+    /**
+     * Fires when model is changed
+     */
+    public void mapChanged() {
+        mainWindow.getEditorArea().repaint();
     }
 }

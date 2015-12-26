@@ -29,16 +29,5 @@ public class Door extends GameObject {
         this.isOpened = isOpened;
     }
 
-    @Override
-    public void draw(Graphics g) {
 
-        g.setColor(BGCOLOR);
-        // g.fillRect(getX(), getY(), getWidth(), getHeight());
-        double innerX = getX() + getWidth() / 4;
-        double innerY = getY() + getHeight() / 4;
-        double innerWidth = getWidth() / 2;
-        double innerHeight = getHeight() / 2;
-        g.setColor(INNERCOLOR);
-        //g.fillRect(innerX, innerY, innerWidth, innerHeight);
-    }
 }
