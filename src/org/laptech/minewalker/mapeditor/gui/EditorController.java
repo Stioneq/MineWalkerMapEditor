@@ -36,20 +36,20 @@ public class EditorController {
     }
 
     public void setShowGrid(boolean selected) {
-        mainWindow.getEditorArea().setShowGrid(selected);
+        mainWindow.getEditorArea().getGrid().setShowGrid(selected);
     }
 
 
     public void setGridSize(String s) {
         try{
-            mainWindow.getEditorArea().setGridSize(Integer.parseInt(s));
+            mainWindow.getEditorArea().getGrid().setGridSize(Integer.parseInt(s));
         }catch (NumberFormatException e){
             JOptionPane.showMessageDialog(null,"Incorrect number format","Error",JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     public void setGridColor(Color color) {
-        mainWindow.getEditorArea().setGridColor(color);
+        mainWindow.getEditorArea().getGrid().setGridColor(color);
     }
 
     /**
@@ -57,5 +57,12 @@ public class EditorController {
      */
     public void mapChanged() {
         mainWindow.getEditorArea().repaint();
+    }
+
+    /**
+     * Select all objects on map
+     */
+    public void selectAll() {
+        map.getSelectedObjects().addAll(map.getObjects());
     }
 }

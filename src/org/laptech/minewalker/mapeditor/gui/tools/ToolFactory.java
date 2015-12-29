@@ -17,7 +17,7 @@ public class ToolFactory {
      * @return selection tool which is used for selecting map objects
      */
     public Tool createSelectionTool(){
-        return new SelectionTool();
+        return new SelectionTool(editorController);
     }
 
     /**

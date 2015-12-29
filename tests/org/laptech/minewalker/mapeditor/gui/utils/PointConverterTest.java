@@ -15,22 +15,8 @@ import static org.junit.Assert.*;
 public class PointConverterTest {
 
 
-    @Test
-    public void testConvertFromScreen() throws Exception {
-        PointConverter pointConverter = new PointConverter();
-        pointConverter.updateMultipliers(50,100,new Rectangle(0,0,10,10));
-        assertEquals(pointConverter.convertFromScreen(new Point(50,100)),new Point(10,10));
 
 
-
-    }
-
-    @Test
-    public void testConvertToScreen() throws Exception {
-        PointConverter pointConverter = new PointConverter();
-        pointConverter.updateMultipliers(50,100,new Rectangle(5,5,10,10));
-        assertEquals(pointConverter.convertToScreen(new Point(10, 10)),new Point(50,100));
-    }
 
     @Test
     public void testUpdateMultipliers() throws Exception {

@@ -1,5 +1,6 @@
 package org.laptech.minewalker.mapeditor.gui;
 
+import org.laptech.minewalker.mapeditor.gui.editorarea.EditorArea;
 import org.laptech.minewalker.mapeditor.gui.tools.Tool;
 import org.laptech.minewalker.mapeditor.gui.tools.ToolChangeListener;
 

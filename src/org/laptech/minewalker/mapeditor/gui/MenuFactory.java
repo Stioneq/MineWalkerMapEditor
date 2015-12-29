@@ -1,13 +1,18 @@
 package org.laptech.minewalker.mapeditor.gui;
 
+import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 
 /**
@@ -78,6 +83,14 @@ public class MenuFactory {
         JMenuItem miUndo = new JMenuItem(strMIUndo);
         JMenuItem miRedo = new JMenuItem(strMIRedo);
         JMenuItem miSelAll = new JMenuItem(strMISelAll);
+        miSelAll.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
+        miSelAll.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editorController.selectAll();
+
+            }
+        });
         JMenuItem miCut = new JMenuItem(strMICut);
         JMenuItem miCopy = new JMenuItem(strMICopy);
         JMenuItem miPaste = new JMenuItem(strMIPaste);
