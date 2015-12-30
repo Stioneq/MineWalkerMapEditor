@@ -13,4 +13,9 @@ public class Floor extends GameObject{
         super(x, y, width, height);
     }
 
+    @Override
+    public String getType() {
+        return "floor";
+    }
+
 }

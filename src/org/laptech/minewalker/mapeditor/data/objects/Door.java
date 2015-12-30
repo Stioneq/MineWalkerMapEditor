@@ -30,4 +30,8 @@ public class Door extends GameObject {
     }
 
 
+    @Override
+    public String getType() {
+        return "door";
+    }
 }

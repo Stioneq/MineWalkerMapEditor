@@ -29,6 +29,11 @@ public class Map {
      */
     private List<Map> states = new LinkedList<>();
     private int currentState;
+    /**
+     * Name of the map
+     */
+    private String name;
+
     public Map(EditorController editorController) {
         objects.addListener(new SetChangeListener<GameObject>() {
             @Override
@@ -106,5 +111,9 @@ public class Map {
         for(GameObject obj : selectedObjects){
             objects.remove(obj);
         }
+    }
+
+    public String getName() {
+        return name;
     }
 }

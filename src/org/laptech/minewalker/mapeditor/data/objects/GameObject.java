@@ -71,18 +71,18 @@ public abstract class GameObject implements HasIntersection, HasCollision{
     }
 
     public Rectangle2D createIntersection(double x, double y,double width, double height){
-        return rectangle.createIntersection(new Rectangle2D.Double(x,y,width,height));
+        return rectangle.createIntersection(new Rectangle2D.Double(x, y, width, height));
     }
 
     @Override
     public boolean collide(double x, double y) {
-        return rectangle.contains(x,y);
+        return rectangle.contains(x, y);
     }
 
     @Override
     public boolean collide(double x, double y, double width, double height) {
         return rectangle.contains(x,y,width,height);
     }
-
+    public abstract String getType();
 
 }

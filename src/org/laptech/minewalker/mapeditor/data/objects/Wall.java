@@ -15,5 +15,10 @@ public class Wall extends GameObject {
         super(x, y, width, height);
     }
 
+    @Override
+    public String getType() {
+        return "wall";
+    }
+
 
 }

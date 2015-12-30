@@ -15,5 +15,10 @@ public class SpikedFloor extends GameObject {
         super(x, y, width, height);
     }
 
+    @Override
+    public String getType() {
+        return "spikedfloor";
+    }
+
 
 }
