@@ -98,8 +98,9 @@ public class ToolsPane extends JPanel {
         ButtonGroup group = new ButtonGroup();
         Color bgColor = new Color(204, 204, 204);
         contentPanel.setBackground(bgColor);
-        contentPanel.add(createToolButton(factory.createFloorTool(),group));
         contentPanel.add(createToolButton(factory.createSelectionTool(),group));
+        contentPanel.add(createToolButton(factory.createMoveTool(),group));
+        contentPanel.add(createToolButton(factory.createFloorTool(),group));
         contentPanel.add(createToolButton(factory.createWallTool(),group));
         return contentPanel;
     }

@@ -5,6 +5,9 @@ import org.laptech.minewalker.mapeditor.data.io.XMLWriter;
 
 import javax.swing.JOptionPane;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Link between Map and GUI
@@ -59,10 +62,5 @@ public class EditorController {
         mainWindow.getEditorArea().repaint();
     }
 
-    /**
-     * Select all objects on map
-     */
-    public void selectAll() {
-        map.getSelectedObjects().addAll(map.getObjects());
-    }
+
 }

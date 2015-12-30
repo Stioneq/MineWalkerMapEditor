@@ -77,29 +77,74 @@ public class MenuFactory {
         String strMIRedo = "Redo";
         String strMICut = "Cut";
         String strMICopy = "Copy";
+        String strMIDelete = "Delete";
         String strMIPaste = "Paste";
         String strMISelAll = "Select all";
         JMenu menuEdit = new JMenu(strMenuEdit);
         JMenuItem miUndo = new JMenuItem(strMIUndo);
+        miUndo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_MASK));
+        miUndo.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editorController.getMap().undo();
+            }
+        });
         JMenuItem miRedo = new JMenuItem(strMIRedo);
+        miRedo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_MASK));
+        miRedo.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editorController.getMap().redo();
+            }
+        });
         JMenuItem miSelAll = new JMenuItem(strMISelAll);
         miSelAll.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
         miSelAll.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                editorController.selectAll();
+                editorController.getMap().selectAll();
 
             }
         });
         JMenuItem miCut = new JMenuItem(strMICut);
+        miCut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
+        miCut.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editorController.getMap().cut();
+            }
+        });
         JMenuItem miCopy = new JMenuItem(strMICopy);
+        miCopy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
+        miCopy.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editorController.getMap().copy();
+            }
+        });
         JMenuItem miPaste = new JMenuItem(strMIPaste);
+        miPaste.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editorController.getMap().paste();
+            }
+        });
+        miPaste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
+        JMenuItem miDelete = new JMenuItem(strMIDelete);
+        miDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,0));
+        miDelete.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editorController.getMap().removeSelected();
+            }
+        });
         menuEdit.add(miUndo);
         menuEdit.add(miRedo);
         menuEdit.add(miSelAll);
         menuEdit.add(miCut);
         menuEdit.add(miCopy);
         menuEdit.add(miPaste);
+        menuEdit.add(miDelete);
         return menuEdit;
     }
 

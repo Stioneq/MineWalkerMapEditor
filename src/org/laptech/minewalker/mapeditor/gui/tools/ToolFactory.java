@@ -35,4 +35,8 @@ public class ToolFactory {
     public Tool createWallTool(){
         return new WallTool(editorController);
     }
+
+    public Tool createMoveTool() {
+        return new MoveTool(editorController);
+    }
 }

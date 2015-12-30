@@ -29,6 +29,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import static java.util.logging.Logger.getLogger;
@@ -43,6 +44,7 @@ public class EditorArea extends JPanel {
     public static final Color BGCOLOR = new Color(37, 37, 39);
     public static final EmptyTool EMPTY_TOOL = new EmptyTool();
     public static final Cursor SEL_CURSOR = new Cursor(Cursor.CROSSHAIR_CURSOR);
+    private static final Cursor MOVE_CURSOR = new Cursor(Cursor.MOVE_CURSOR);
 
 
     //Fields used in displaying gameobject tool brush
@@ -168,7 +170,7 @@ public class EditorArea extends JPanel {
                     double width = ((GameObjectTool) currentTool).getWidth();
                     double height = ((GameObjectTool) currentTool).getHeight();
                     interArea.clear();
-                    List<GameObject> objects = mainWindow.getController().getMap().getObjects();
+                    Set<GameObject> objects = mainWindow.getController().getMap().getObjects();
                     for (GameObject gameObject : objects) {
                         if (gameObject.intersect(realX - width / 2, realY - height / 2, width, height)) {
                             Rectangle2D intersection = gameObject.createIntersection(realX - width / 2, realY - height / 2, width, height);
@@ -251,7 +253,7 @@ public class EditorArea extends JPanel {
         double realY = pointConverter.convertYFromScreen((int) sY);
         double width = ((GameObjectTool) currentTool).getWidth();
         double height = ((GameObjectTool) currentTool).getHeight();
-        List<GameObject> objects = mainWindow.getController().getMap().getObjects();
+        Set<GameObject> objects = mainWindow.getController().getMap().getObjects();
         for (GameObject gameObject : objects) {
             if (gameObject.intersect(realX - width / 2, realY - height / 2, width, height)) {
                 return true;
@@ -326,12 +328,18 @@ public class EditorArea extends JPanel {
         this.currentTool = currentTool;
         if (isSelectionTool()) {
             setCursor(SEL_CURSOR);
-        } else if (isGameObjectTool()) {
+        }else if(isMoveTool()){
+            setCursor(MOVE_CURSOR);
+        }else if (isGameObjectTool()) {
             GameObjectTool gameObjectTool = (GameObjectTool) currentTool;
             toolWidth = pointConverter.convertXUnitsToScreen(gameObjectTool.getWidth());
             toolHeight = pointConverter.convertYUnitsToScreen(gameObjectTool.getHeight());
             setCursor(blankCursor);
         }
+    }
+
+    private boolean isMoveTool() {
+        return currentTool.getType().equals("move");
     }
 
     private boolean isSelectionTool() {
