@@ -86,6 +86,10 @@ public class EditorArea extends JPanel {
     private boolean isSelection;
     private MainWindow mainWindow;
     private EditorIntersections interArea;
+    /**
+     * true if move
+     */
+    private boolean isMove;
 
     public EditorArea(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
@@ -106,6 +110,7 @@ public class EditorArea extends JPanel {
 
                 }
                 if (SwingUtilities.isLeftMouseButton(e)) {
+                    isMove = false;
                     if (isSelectionTool()) {
                         if (e.isControlDown()) {
                             ((SelectionTool) currentTool).setSelectionMode(SelectionTool.SelectionMode.ADDITIONAL_SELECTION);
@@ -127,6 +132,11 @@ public class EditorArea extends JPanel {
                 }
 
 
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                isMove = false;
             }
 
             @Override
@@ -155,7 +165,14 @@ public class EditorArea extends JPanel {
              * selection start y
              */
             int sY;
-
+            /**
+             * move x
+             */
+            int mX;
+            /**
+             * move y
+             */
+            int mY;
             @Override
             public void mouseMoved(MouseEvent e) {
                 super.mouseMoved(e);
@@ -191,26 +208,43 @@ public class EditorArea extends JPanel {
                     x = e.getX();
                     y = e.getY();
                 }
-                if (SwingUtilities.isLeftMouseButton(e) && isSelectionTool()) {
-                    if (!isSelection) {
-                        isSelection = true;
-                        sX = e.getX();
-                        sY = e.getY();
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    if (isSelectionTool()) {
+                        if (!isSelection) {
+                            isSelection = true;
+                            sX = e.getX();
+                            sY = e.getY();
 
-                    } else {
-                        int dX = e.getX() - sX;
-                        int dY = e.getY() - sY;
-                        selRect.setLocation(sX, sY);
-                        if (dX < 0) {
-                            selRect.setLocation(e.getX(), (int) selRect.getX());
-                            dX *= -1;
+                        } else {
+                            int dX = e.getX() - sX;
+                            int dY = e.getY() - sY;
+                            selRect.setLocation(sX, sY);
+                            if (dX < 0) {
+                                selRect.setLocation(e.getX(), (int) selRect.getX());
+                                dX *= -1;
+                            }
+                            if (dY < 0) {
+                                selRect.setLocation((int) selRect.getX(), e.getY());
+                                dY *= -1;
+                            }
+                            selRect.setSize(dX, dY);
+                            EditorArea.this.repaint();
                         }
-                        if (dY < 0) {
-                            selRect.setLocation((int) selRect.getX(), e.getY());
-                            dY *= -1;
+                    } else if (isMoveTool()) {
+                        if (!isMove) {
+                            isMove = true;
+                            mX = e.getX();
+                            mY = e.getY();
+                        } else {
+                            int dX = e.getX() - mX;
+                            int dY = e.getY() - mY;
+                            if(Math.abs(dX)>1 || Math.abs(dY)>1) {
+                                System.out.println(1);
+                                currentTool.apply(pointConverter.convertXFromScreen(dX)-pointConverter.convertXFromScreen(0), pointConverter.convertYFromScreen(dY)-pointConverter.convertYFromScreen(0));
+                                mX = e.getX();
+                                mY = e.getY();
+                            }
                         }
-                        selRect.setSize(dX, dY);
-                        EditorArea.this.repaint();
                     }
                 }
             }

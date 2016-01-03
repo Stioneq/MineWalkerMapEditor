@@ -178,4 +178,19 @@ public class Map {
             mapChanged();
         }
     }
+
+    /**
+     * Move selected objects
+     * @param x x offset
+     * @param y y offset
+     */
+    public void moveSelectedObjects(double x, double y) {
+        for(GameObject obj: selectedObjects){
+            obj.setX(x+obj.getX());
+            obj.setY(y + obj.getY());
+        }
+        if(!selectedObjects.isEmpty()){
+            editorController.mapChanged();
+        }
+    }
 }

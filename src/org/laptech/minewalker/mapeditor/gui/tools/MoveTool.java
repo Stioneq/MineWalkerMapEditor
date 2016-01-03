@@ -1,6 +1,7 @@
 package org.laptech.minewalker.mapeditor.gui.tools;
 
 import org.laptech.minewalker.mapeditor.gui.EditorController;
+import org.laptech.minewalker.mapeditor.gui.tools.properties.PropertyChangeListener;
 import org.laptech.minewalker.mapeditor.gui.tools.properties.ToolProperty;
 
 import javax.imageio.ImageIO;
@@ -46,7 +47,7 @@ public class MoveTool implements Tool {
 
     @Override
     public void apply(double x, double y, double width, double height) {
-
+        throw new UnsupportedOperationException("Operation with 4 arguments is not supported");
     }
 
     @Override
@@ -56,7 +57,7 @@ public class MoveTool implements Tool {
 
     @Override
     public void apply(double x, double y) {
-
+        editorController.getMap().moveSelectedObjects(x, y);
     }
 
     @Override
@@ -65,7 +66,7 @@ public class MoveTool implements Tool {
     }
 
     @Override
-    public void addPropertyChangeListener(org.laptech.minewalker.mapeditor.gui.tools.properties.PropertyChangeListener propertyChangeListener) {
+    public void addPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
 
     }
 
