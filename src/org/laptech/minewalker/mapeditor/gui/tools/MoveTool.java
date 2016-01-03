@@ -5,6 +5,7 @@ import org.laptech.minewalker.mapeditor.gui.EditorController;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
+import java.util.EnumSet;
 import java.util.logging.Logger;
 
 import static java.util.logging.Logger.getLogger;
@@ -51,6 +52,12 @@ public class MoveTool implements Tool{
     public void apply(double x, double y) {
 
     }
+
+    @Override
+    public EnumSet<ToolProperty> getProperties() {
+        return EnumSet.noneOf(ToolProperty.class);
+    }
+
 
     @Override
     public void draw(Graphics g, int x, int y, int width, int height) {

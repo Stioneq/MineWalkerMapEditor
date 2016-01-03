@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
+import java.util.EnumSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -63,6 +64,11 @@ public class SelectionTool implements Tool{
     @Override
     public void apply(double x, double y) {
         apply(x,y,1,1);
+    }
+
+    @Override
+    public EnumSet<ToolProperty> getProperties() {
+        return EnumSet.noneOf(ToolProperty.class);
     }
 
 

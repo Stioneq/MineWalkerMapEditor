@@ -1,6 +1,7 @@
 package org.laptech.minewalker.mapeditor.gui.tools;
 
 import java.awt.Image;
+import java.util.EnumSet;
 
 /**
  * @author rlapin
@@ -22,4 +23,10 @@ public interface Tool extends Drawable {
      * @param y value of y in real units
      */
     void apply(double x, double y);
+
+    /**
+     * Get properties for tool
+     * @return
+     */
+    EnumSet<ToolProperty> getProperties();
 }

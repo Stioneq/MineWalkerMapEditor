@@ -3,12 +3,14 @@ package org.laptech.minewalker.mapeditor.gui.tools;
 import org.laptech.minewalker.mapeditor.data.objects.GameObject;
 import org.laptech.minewalker.mapeditor.gui.EditorController;
 
+import java.util.EnumSet;
+
 /**
  * Tool for adding gameobjects to map
  *
  * @author rlapin
  */
-public abstract class GameObjectTool implements Tool {
+public abstract class GameObjectTool implements Tool{
     private EditorController editorController;
     private double width = 50;
     private double height = 50;
@@ -42,6 +44,10 @@ public abstract class GameObjectTool implements Tool {
 
     public void setHeight(double height) {
         this.height = height;
+    }
+    @Override
+    public EnumSet<ToolProperty> getProperties() {
+        return EnumSet.of(ToolProperty.HEIGHT,ToolProperty.WIDTH);
     }
 
 }

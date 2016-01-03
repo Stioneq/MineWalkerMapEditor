@@ -2,6 +2,7 @@ package org.laptech.minewalker.mapeditor.gui.tools;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.EnumSet;
 
 /**
  * NULL tool
@@ -35,6 +36,12 @@ public class EmptyTool implements Tool {
     public void apply(double x, double y) {
 
     }
+
+    @Override
+    public EnumSet<ToolProperty> getProperties() {
+        return EnumSet.noneOf(ToolProperty.class);
+    }
+
 
     @Override
     public void draw(Graphics g, int x, int y, int width, int height) {
