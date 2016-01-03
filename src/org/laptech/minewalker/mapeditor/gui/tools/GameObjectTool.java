@@ -19,30 +19,16 @@ public abstract class GameObjectTool implements Tool {
     private double width = 50;
     private double height = 50;
     private PropertyChangeListener propertyChangeListener;
-    private Set<ToolProperty> properties = new LinkedHashSet<>();
+    protected Set<ToolProperty> properties = new LinkedHashSet<>();
 
     public GameObjectTool(EditorController editorController) {
         this.editorController = editorController;
 
-
-        SimpleIntegerPropertyView widthView = new SimpleIntegerPropertyView();
-        widthView.addValueChangeListener(value -> {
-            setWidth(value);
-            onPropertyChanged();
-        });
-        properties.add(new ToolProperty("width: ", widthView));
-
-        SimpleIntegerPropertyView heightView = new SimpleIntegerPropertyView();
-        heightView.addValueChangeListener(value -> {
-            setHeight(value);
-            onPropertyChanged();
-
-        });
-        properties.add(new ToolProperty("height: ", heightView));
+        setupProperties();
 
     }
 
-    private void onPropertyChanged() {
+    protected void onPropertyChanged() {
         propertyChangeListener.onChange();
     }
 
@@ -76,13 +62,26 @@ public abstract class GameObjectTool implements Tool {
 
     @Override
     public Set<ToolProperty> getProperties() {
-
         return properties;
     }
+    protected void setupProperties(){
+        SimpleIntegerPropertyView widthView = new SimpleIntegerPropertyView();
+        widthView.addValueChangeListener(value -> {
+            setWidth(value);
+            onPropertyChanged();
+        });
+        properties.add(new ToolProperty("width: ", widthView));
 
+        SimpleIntegerPropertyView heightView = new SimpleIntegerPropertyView();
+        heightView.addValueChangeListener(value -> {
+            setHeight(value);
+            onPropertyChanged();
+
+        });
+        properties.add(new ToolProperty("height: ", heightView));
+    }
     @Override
     public void addPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
-        System.out.println(2);
         this.propertyChangeListener = propertyChangeListener;
     }
 }

@@ -8,8 +8,6 @@ import java.awt.Color;
  * @author rlapin
  */
 public class Door extends GameObject {
-    public static final Color BGCOLOR = new Color(65, 82, 88, 255);
-    public static final Color INNERCOLOR = new Color(8, 88, 63, 255);
     /**
      * True if door is opened
      */

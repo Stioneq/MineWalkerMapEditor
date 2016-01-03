@@ -8,6 +8,7 @@ import org.laptech.minewalker.mapeditor.gui.EditorController;
  * @author rlapin
  */
 public class ToolFactory {
+    private final Tool DOOR_TOOL;
     private final FloorTool FLOOR_TOOL;
     private final WallTool WALL_TOOL;
     private final MoveTool MOVE_TOOL;
@@ -20,7 +21,7 @@ public class ToolFactory {
         FLOOR_TOOL = new FloorTool(editorController);
         WALL_TOOL = new WallTool(editorController);
         MOVE_TOOL = new MoveTool(editorController);
-
+        DOOR_TOOL = new DoorTool(editorController);
 
     }
 
@@ -47,5 +48,9 @@ public class ToolFactory {
 
     public Tool createMoveTool() {
         return MOVE_TOOL;
+    }
+
+    public Tool createDoorTool() {
+        return DOOR_TOOL;
     }
 }

@@ -239,7 +239,6 @@ public class EditorArea extends JPanel {
                             int dX = e.getX() - mX;
                             int dY = e.getY() - mY;
                             if(Math.abs(dX)>1 || Math.abs(dY)>1) {
-                                System.out.println(1);
                                 currentTool.apply(pointConverter.convertXFromScreen(dX)-pointConverter.convertXFromScreen(0), pointConverter.convertYFromScreen(dY)-pointConverter.convertYFromScreen(0));
                                 mX = e.getX();
                                 mY = e.getY();
