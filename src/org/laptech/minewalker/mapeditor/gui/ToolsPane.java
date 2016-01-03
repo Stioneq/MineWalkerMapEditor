@@ -3,16 +3,14 @@ package org.laptech.minewalker.mapeditor.gui;
 import org.laptech.minewalker.mapeditor.gui.tools.Tool;
 import org.laptech.minewalker.mapeditor.gui.tools.ToolChangeListener;
 import org.laptech.minewalker.mapeditor.gui.tools.ToolFactory;
+import org.laptech.minewalker.mapeditor.gui.utils.ComponentUtils;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -22,6 +20,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +53,14 @@ public class ToolsPane extends JPanel {
     private void initComponents() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.gridheight = 1;
+        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.CENTER;
         add(createToolsPanel(), gbc);
+        gbc.gridy = 1;
         add(createSettingsPanel(), gbc);
 
     }
@@ -66,7 +72,7 @@ public class ToolsPane extends JPanel {
      */
     private JPanel createSettingsPanel() {
         this.settingsPanel = new SettingsPanel();
-
+        listeners.add(settingsPanel::revalidateForTool);
         return settingsPanel.getPanel();
     }
 
@@ -76,57 +82,71 @@ public class ToolsPane extends JPanel {
      * @return panel that contains two panel, one label panel and panel with tools
      */
     private JPanel createToolsPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        JPanel labelPanel = createLabelLane("Tools");
-        panel.add(labelPanel, BorderLayout.NORTH);
+        ButtonGroup group = new ButtonGroup();
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.weightx = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.CENTER;
+        JPanel labelPanel = ComponentUtils.createLabelLane("Tools");
+        panel.add(labelPanel, gbc);
         panel.setOpaque(true);
         panel.setBackground(Color.GRAY);
-        JPanel contentPanel = createContentPanel();
-        panel.add(contentPanel, BorderLayout.CENTER);
+        gbc.gridy = 1;
+        JPanel separatorPanel;
+        separatorPanel = new HidablePanel("Basic tools", createBasicToolsPanel(group));
+        panel.add(separatorPanel, gbc);
+        separatorPanel = new HidablePanel("Game tools", createGameObjectToolsPanel(group));
+        gbc.gridy = 2;
+        panel.add(separatorPanel, gbc);
         return panel;
     }
 
+
     /**
-     * Create panel with tools
+     * Create panel with gameobject tools
      *
-     * @return panel with tools
+     * @param group
+     * @return panel with gameobject tools
      */
-    private JPanel createContentPanel() {
+    private JPanel createGameObjectToolsPanel(ButtonGroup group) {
         JPanel contentPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
         ToolFactory factory = new ToolFactory(controller);
         contentPanel.setOpaque(true);
-        ButtonGroup group = new ButtonGroup();
+
         Color bgColor = new Color(204, 204, 204);
         contentPanel.setBackground(bgColor);
-        contentPanel.add(createToolButton(factory.createSelectionTool(),group));
-        contentPanel.add(createToolButton(factory.createMoveTool(),group));
-        contentPanel.add(createToolButton(factory.createFloorTool(),group));
-        contentPanel.add(createToolButton(factory.createWallTool(),group));
+        contentPanel.add(createToolButton(factory.createFloorTool(), group));
+        contentPanel.add(createToolButton(factory.createWallTool(), group));
         return contentPanel;
     }
 
     /**
-     * Create lane with label containing definite text
+     * Create panel with basic tools
      *
-     * @param text text of label
-     * @return JPanel
+     * @param group
+     * @return panel with basic tools
      */
-    private JPanel createLabelLane(String text) {
-        JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        labelPanel.setOpaque(true);
-        Color bgColor = new Color(30, 30, 30, 255);
-        labelPanel.setBackground(bgColor);
-        JLabel label = new JLabel(text);
-        Color fgLabelColor = new Color(120, 200, 145, 255);
-        label.setForeground(fgLabelColor);
-        labelPanel.add(label);
-        return labelPanel;
+    private JPanel createBasicToolsPanel(ButtonGroup group) {
+        JPanel contentPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        ToolFactory factory = new ToolFactory(controller);
+        contentPanel.setOpaque(true);
+        Color bgColor = new Color(204, 204, 204);
+        contentPanel.setBackground(bgColor);
+        contentPanel.add(createToolButton(factory.createSelectionTool(), group));
+        contentPanel.add(createToolButton(factory.createMoveTool(), group));
+        return contentPanel;
     }
+
 
     /**
      * Create button for exact Tool and add it to buttongroup
      *
-     * @param tool tool that used for button
+     * @param tool  tool that used for button
      * @param group
      * @return ImageButton
      */
@@ -146,7 +166,9 @@ public class ToolsPane extends JPanel {
         button.setSelectedIcon(button.getPressedIcon());
         button.setToolTipText(tool.getTooltip());
         button.addActionListener(event -> {
-            for (ToolChangeListener listener : listeners) listener.onToolChanged(tool);
+            for (ToolChangeListener listener : listeners) {
+                listener.onToolChanged(tool);
+            }
             /*for(Component component :button.getParent().getComponents()){
                 if(component!=button){
                     if(component instanceof JToggleButton){
@@ -193,6 +215,7 @@ public class ToolsPane extends JPanel {
 
     /**
      * Add tool changelistener
+     *
      * @param listener toolchange listener
      */
     public void addToolChangeListener(ToolChangeListener listener) {

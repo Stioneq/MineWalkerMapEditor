@@ -90,13 +90,15 @@ public class MenuFactory {
             }
         });
         JMenuItem miRedo = new JMenuItem(strMIRedo);
-        miRedo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_MASK));
+        miRedo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
         miRedo.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 editorController.getMap().redo();
             }
         });
+        miUndo.setEnabled(false);
+        miRedo.setEnabled(false);
         JMenuItem miSelAll = new JMenuItem(strMISelAll);
         miSelAll.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
         miSelAll.addActionListener(new AbstractAction() {

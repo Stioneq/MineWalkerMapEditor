@@ -21,7 +21,7 @@ public class UndoRedoChanger {
     }
 
     public void update(List<MapState> states, int currentState) {
-        if(currentState!=-1){
+        if(currentState>0){
             miUndo.setText("Undo "+states.get(currentState).getChangeTitle());
             miUndo.setEnabled(true);
         }else{

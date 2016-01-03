@@ -28,7 +28,7 @@ public class SettingsPanel {
      * Define components in panel based on current tool
      * @param tool
      */
-    private void revalidateForTool(Tool tool) {
+    public void revalidateForTool(Tool tool) {
         panel.setLayout(new GridLayout(2,1));
         addNumericLane("width: ");
         addNumericLane("height: ");

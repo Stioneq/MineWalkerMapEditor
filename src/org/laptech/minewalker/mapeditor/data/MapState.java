@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 import org.laptech.minewalker.mapeditor.data.objects.GameObject;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -12,8 +13,8 @@ import java.util.Set;
  */
 public class MapState {
     private final String changeTitle;
-    private ObservableSet<GameObject> objects = FXCollections.observableSet();
-    private ObservableSet<GameObject> selectedObjects = FXCollections.observableSet();
+    private Set<GameObject> objects = new HashSet<>();
+    private Set<GameObject> selectedObjects = new HashSet<>();
 
     public MapState(Set<GameObject> objects, Set<GameObject> selectedObjects, String changeTitle) {
         this.changeTitle = changeTitle;
@@ -21,11 +22,11 @@ public class MapState {
         this.selectedObjects.addAll(selectedObjects);
     }
 
-    public ObservableSet<GameObject> getObjects() {
+    public Set<GameObject> getObjects() {
         return objects;
     }
 
-    public ObservableSet<GameObject> getSelectedObjects() {
+    public Set<GameObject> getSelectedObjects() {
         return selectedObjects;
     }
 

@@ -1,8 +1,5 @@
 package org.laptech.minewalker.mapeditor.data;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableSet;
-import javafx.collections.SetChangeListener;
 import org.laptech.minewalker.mapeditor.data.objects.GameObject;
 import org.laptech.minewalker.mapeditor.data.undoredo.DefaultUndoRedoAction;
 import org.laptech.minewalker.mapeditor.data.undoredo.UndoRedoAction;
@@ -11,6 +8,7 @@ import org.laptech.minewalker.mapeditor.gui.EditorController;
 import org.laptech.minewalker.mapeditor.gui.tools.SelectionTool;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -24,8 +22,8 @@ import static java.util.logging.Logger.getLogger;
  */
 public class Map {
     private static final Logger LOGGER = getLogger(Map.class.getName());
-    private ObservableSet<GameObject> objects = FXCollections.observableSet();
-    private ObservableSet<GameObject> selectedObjects = FXCollections.observableSet();
+    private Set<GameObject> objects = new HashSet<>();
+    private Set<GameObject> selectedObjects = new HashSet<>();
     private IClipBoard clipBoard = new ClipBoard();
 
     /**
@@ -38,28 +36,12 @@ public class Map {
 
     public Map(EditorController editorController) {
         this.editorController = editorController;
-        objects.addListener(new SetChangeListener<GameObject>() {
-            @Override
-            public void onChanged(Change<? extends GameObject> c) {
-
-                editorController.mapChanged();
-                LOGGER.info("map changed");
-            }
-        });
-        selectedObjects.addListener(new SetChangeListener<GameObject>() {
-            @Override
-            public void onChanged(Change<? extends GameObject> c) {
-                editorController.mapChanged();
-                LOGGER.info("map changed");
-            }
-        });
         undoRedoAction = new DefaultUndoRedoAction(this, new UndoRedoHandler() {
             @Override
             public void onUndoRedo(List<MapState> states, int curState) {
-                editorController.mapStateChanged(states,curState);
+                editorController.mapStateChanged(states, curState);
             }
         });
-
     }
 
     /**
@@ -85,6 +67,11 @@ public class Map {
      */
     public void selectAll() {
         selectedObjects.addAll(objects);
+        mapChanged();
+    }
+
+    private void mapChanged() {
+        editorController.mapChanged();
         undoRedoAction.changed();
     }
 
@@ -129,7 +116,7 @@ public class Map {
      */
     public void removeSelected() {
         selectedObjects.forEach(objects::remove);
-        undoRedoAction.changed();
+        mapChanged();
     }
 
     public String getName() {
@@ -138,7 +125,7 @@ public class Map {
 
     public void addGameObject(GameObject gameObject) {
         objects.add(gameObject);
-        undoRedoAction.changed();
+        mapChanged();
     }
 
     /**
@@ -150,9 +137,6 @@ public class Map {
      * @param height height of rectangle region
      */
     public void selectObjects(double x, double y, double width, double height, SelectionTool.SelectionMode selectionMode) {
-
-
-
         // If some of elements selection changed this variable will be true
         boolean isComplete = false;
         if (selectionMode == SelectionTool.SelectionMode.NEW_SELECTION) {
@@ -170,18 +154,27 @@ public class Map {
             }
         }
         if (isComplete) {
-            undoRedoAction.changed();
+            mapChanged();
         }
     }
 
-
+    /**
+     * Set objects and signal to editorController
+     * @param objects
+     */
     public void setObjects(Set<GameObject> objects) {
         this.objects.clear();
         this.objects.addAll(objects);
+        editorController.mapChanged();
     }
 
+    /**
+     * Set selected objects and signal to editorController
+     * @param selectedObjects
+     */
     public void setSelectedObjects(Set<GameObject> selectedObjects) {
         this.selectedObjects.clear();
         this.selectedObjects.addAll(selectedObjects);
+        editorController.mapChanged();
     }
 }

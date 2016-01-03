@@ -2,7 +2,6 @@ package org.laptech.minewalker.mapeditor.data.undoredo;
 
 import org.laptech.minewalker.mapeditor.data.Map;
 import org.laptech.minewalker.mapeditor.data.MapState;
-import org.laptech.minewalker.mapeditor.data.undoredo.UndoRedoAction;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -36,6 +35,9 @@ public class DefaultUndoRedoAction implements UndoRedoAction {
     }
 
     public void addState(){
+        while(states.size()-1>currentState){
+            states.remove(states.size()-1);
+        }
         states.add(getCurrentState());
     }
 
@@ -45,8 +47,9 @@ public class DefaultUndoRedoAction implements UndoRedoAction {
 
     @Override
     public void undo() {
-        restoreState(states.get(currentState));
+        restoreState(states.get(currentState-1));
         currentState--;
+        undoRedoHandler.onUndoRedo(states,currentState);
         LOGGER.info("UNDO #"+currentState);
     }
 
@@ -61,7 +64,9 @@ public class DefaultUndoRedoAction implements UndoRedoAction {
 
     @Override
     public void redo() {
+        restoreState(states.get(currentState+1));
         currentState++;
+        undoRedoHandler.onUndoRedo(states,currentState);
         LOGGER.info("REDO #"+currentState);
     }
 
