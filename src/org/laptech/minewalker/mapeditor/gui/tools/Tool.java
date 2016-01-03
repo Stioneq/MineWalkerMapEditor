@@ -1,7 +1,10 @@
 package org.laptech.minewalker.mapeditor.gui.tools;
 
+import org.laptech.minewalker.mapeditor.gui.tools.properties.PropertyChangeListener;
+import org.laptech.minewalker.mapeditor.gui.tools.properties.ToolProperty;
+
 import java.awt.Image;
-import java.util.EnumSet;
+import java.util.Set;
 
 /**
  * @author rlapin
@@ -28,5 +31,6 @@ public interface Tool extends Drawable {
      * Get properties for tool
      * @return
      */
-    EnumSet<ToolProperty> getProperties();
+    Set<ToolProperty> getProperties();
+    void addPropertyChangeListener(PropertyChangeListener propertyChangeListener);
 }

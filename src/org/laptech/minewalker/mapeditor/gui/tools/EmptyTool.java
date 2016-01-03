@@ -1,8 +1,11 @@
 package org.laptech.minewalker.mapeditor.gui.tools;
 
+import org.laptech.minewalker.mapeditor.gui.tools.properties.ToolProperty;
+
 import java.awt.Graphics;
 import java.awt.Image;
-import java.util.EnumSet;
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * NULL tool
@@ -38,8 +41,13 @@ public class EmptyTool implements Tool {
     }
 
     @Override
-    public EnumSet<ToolProperty> getProperties() {
-        return EnumSet.noneOf(ToolProperty.class);
+    public Set<ToolProperty> getProperties() {
+        return Collections.emptySet();
+    }
+
+    @Override
+    public void addPropertyChangeListener(org.laptech.minewalker.mapeditor.gui.tools.properties.PropertyChangeListener propertyChangeListener) {
+
     }
 
 

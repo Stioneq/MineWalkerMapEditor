@@ -33,8 +33,8 @@ public class HidablePanel extends JPanel {
 
     static {
         try {
-            IMAGE_PLUS = new ImageIcon(ImageIO.read(HidablePanel.class.getClassLoader().getResourceAsStream("images/plus.png")).getScaledInstance(24, 24, Image.SCALE_FAST));
-            IMAGE_MINUS = new ImageIcon(ImageIO.read(HidablePanel.class.getClassLoader().getResourceAsStream("images/minus.png")).getScaledInstance(24, 24, Image.SCALE_FAST));
+            IMAGE_PLUS = new ImageIcon(ImageIO.read(HidablePanel.class.getClassLoader().getResourceAsStream("images/plus.png")).getScaledInstance(LABEL_IMG_SIZE, LABEL_IMG_SIZE, Image.SCALE_FAST));
+            IMAGE_MINUS = new ImageIcon(ImageIO.read(HidablePanel.class.getClassLoader().getResourceAsStream("images/minus.png")).getScaledInstance(LABEL_IMG_SIZE, LABEL_IMG_SIZE, Image.SCALE_FAST));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,7 +48,6 @@ public class HidablePanel extends JPanel {
      * Panel that can hide via clicking on the title
      */
     private JPanel hidablePane;
-    private Image image;
 
     public HidablePanel() {
         setOpaque(true);

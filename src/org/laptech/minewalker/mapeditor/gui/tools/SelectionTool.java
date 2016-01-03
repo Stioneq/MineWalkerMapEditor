@@ -1,15 +1,15 @@
 package org.laptech.minewalker.mapeditor.gui.tools;
 
-import org.laptech.minewalker.mapeditor.data.Map;
-import org.laptech.minewalker.mapeditor.data.objects.GameObject;
 import org.laptech.minewalker.mapeditor.gui.EditorController;
+import org.laptech.minewalker.mapeditor.gui.tools.properties.PropertyChangeListener;
+import org.laptech.minewalker.mapeditor.gui.tools.properties.ToolProperty;
 
 import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
-import java.util.EnumSet;
+import java.util.Collections;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -31,6 +31,8 @@ public class SelectionTool implements Tool{
      * New selection means that selection list is cleared before applying tool
      */
     private SelectionMode selectionMode = SelectionMode.NEW_SELECTION;
+    private PropertyChangeListener propertyChangeListener;
+
     public SelectionTool(EditorController editorController) {
         this.editorController = editorController;
         try {
@@ -67,8 +69,13 @@ public class SelectionTool implements Tool{
     }
 
     @Override
-    public EnumSet<ToolProperty> getProperties() {
-        return EnumSet.noneOf(ToolProperty.class);
+    public Set<ToolProperty> getProperties() {
+        return Collections.emptySet();
+    }
+
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
+        this.propertyChangeListener = propertyChangeListener;
     }
 
 

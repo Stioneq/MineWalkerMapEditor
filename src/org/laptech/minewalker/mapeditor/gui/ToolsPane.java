@@ -3,9 +3,9 @@ package org.laptech.minewalker.mapeditor.gui;
 import org.laptech.minewalker.mapeditor.gui.tools.Tool;
 import org.laptech.minewalker.mapeditor.gui.tools.ToolChangeListener;
 import org.laptech.minewalker.mapeditor.gui.tools.ToolFactory;
+import org.laptech.minewalker.mapeditor.gui.tools.properties.PropertyChangeListener;
 import org.laptech.minewalker.mapeditor.gui.utils.ComponentUtils;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -20,7 +20,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class ToolsPane extends JPanel {
     private JPanel createSettingsPanel() {
         this.settingsPanel = new SettingsPanel();
         listeners.add(settingsPanel::revalidateForTool);
-        return settingsPanel.getPanel();
+        return settingsPanel.getContentPanel();
     }
 
     /**
@@ -165,17 +164,15 @@ public class ToolsPane extends JPanel {
         button.setPressedIcon(new ImageIcon(createPressedImage(image).getScaledInstance(BTN_SIZE.width, BTN_SIZE.height, Image.SCALE_FAST)));
         button.setSelectedIcon(button.getPressedIcon());
         button.setToolTipText(tool.getTooltip());
+        tool.addPropertyChangeListener(() -> {
+            for (ToolChangeListener listener : listeners) {
+                listener.onToolChanged(tool);
+            }
+        });
         button.addActionListener(event -> {
             for (ToolChangeListener listener : listeners) {
                 listener.onToolChanged(tool);
             }
-            /*for(Component component :button.getParent().getComponents()){
-                if(component!=button){
-                    if(component instanceof JToggleButton){
-                        ((JToggleButton)component).setSelected(false);
-                    }
-                }
-            }*/
         });
         group.add(button);
         return button;

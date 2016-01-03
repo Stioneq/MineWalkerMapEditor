@@ -1,11 +1,13 @@
 package org.laptech.minewalker.mapeditor.gui.tools;
 
 import org.laptech.minewalker.mapeditor.gui.EditorController;
+import org.laptech.minewalker.mapeditor.gui.tools.properties.ToolProperty;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
-import java.util.EnumSet;
+import java.util.Collections;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import static java.util.logging.Logger.getLogger;
@@ -54,8 +56,13 @@ public class MoveTool implements Tool{
     }
 
     @Override
-    public EnumSet<ToolProperty> getProperties() {
-        return EnumSet.noneOf(ToolProperty.class);
+    public Set<ToolProperty> getProperties() {
+        return Collections.emptySet();
+    }
+
+    @Override
+    public void addPropertyChangeListener(org.laptech.minewalker.mapeditor.gui.tools.properties.PropertyChangeListener propertyChangeListener) {
+
     }
 
 

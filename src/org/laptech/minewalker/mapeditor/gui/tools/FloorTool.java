@@ -5,7 +5,6 @@ import org.laptech.minewalker.mapeditor.data.objects.GameObject;
 import org.laptech.minewalker.mapeditor.gui.EditorController;
 
 import javax.imageio.ImageIO;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
@@ -50,6 +49,8 @@ public class FloorTool extends GameObjectTool {
     public String getType() {
         return TYPE;
     }
+
+
 
     @Override
     public void draw(Graphics g, int x, int y, int width, int height) {

@@ -67,10 +67,11 @@ public class EditorController {
 
 
     public void mapStateChanged(List<MapState> states, int currentState) {
-        undoRedoChanger.update(states,currentState);
+        undoRedoChanger.update(states, currentState);
     }
 
     public void initUndoRedoChanger(JMenuItem miUndo, JMenuItem miRedo) {
         undoRedoChanger = new UndoRedoChanger(miUndo,miRedo);
     }
+
 }
