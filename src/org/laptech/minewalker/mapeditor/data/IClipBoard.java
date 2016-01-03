@@ -5,6 +5,8 @@ package org.laptech.minewalker.mapeditor.data;
  */
 public interface IClipBoard {
     void cut();
+
     void paste();
+
     void copy();
 }

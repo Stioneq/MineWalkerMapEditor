@@ -2,6 +2,7 @@ package org.laptech.minewalker.mapeditor.data.undoredo;
 
 /**
  * Support of undo/redo
+ *
  * @author rlapin
  */
 public interface UndoRedoAction {

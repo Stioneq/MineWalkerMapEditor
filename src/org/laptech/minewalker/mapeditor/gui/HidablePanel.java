@@ -1,7 +1,5 @@
 package org.laptech.minewalker.mapeditor.gui;
 
-import org.laptech.minewalker.mapeditor.gui.utils.ComponentUtils;
-
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -62,7 +60,6 @@ public class HidablePanel extends JPanel {
         initComponents();
 
     }
-
 
 
     private void initComponents() {

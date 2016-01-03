@@ -2,11 +2,13 @@ package org.laptech.minewalker.mapeditor.data.objects;
 
 /**
  * Defines behaviour for object that can collide
+ *
  * @author rlapin
  */
 public interface HasCollision {
     /**
      * Check point(x,y) for collision
+     *
      * @param x x coordinate
      * @param y y coordinate
      * @return true if collide
@@ -15,6 +17,7 @@ public interface HasCollision {
 
     /**
      * Collide with rect
+     *
      * @param x
      * @param y
      * @param width

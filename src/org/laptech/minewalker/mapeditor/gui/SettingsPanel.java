@@ -16,9 +16,9 @@ import java.awt.GridLayout;
  * @author rlapin
  */
 public class SettingsPanel {
-    private JPanel contentPanel;
     public static final Color BGCOLOR = new Color(30, 30, 30, 255);
     public static final Color FGCOLOR = new Color(120, 200, 145, 255);
+    private JPanel contentPanel;
     private JPanel panel;
 
     public SettingsPanel() {
@@ -40,7 +40,7 @@ public class SettingsPanel {
         contentPanel.setLayout(new GridLayout(tool.getProperties().size(), 1));
         tool.getProperties().forEach(this::addComponent);
         panel.revalidate();
-        panel.setVisible(tool.getProperties().size()>0);
+        panel.setVisible(tool.getProperties().size() > 0);
     }
 
 

@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Class for setting undo and redo menu
+ *
  * @author rlapin
  */
 public class UndoRedoChanger {
@@ -14,6 +15,7 @@ public class UndoRedoChanger {
 
     private final JMenuItem miUndo;
     private final JMenuItem miRedo;
+
     public UndoRedoChanger(JMenuItem miUndo, JMenuItem miRedo) {
 
         this.miUndo = miUndo;
@@ -21,16 +23,16 @@ public class UndoRedoChanger {
     }
 
     public void update(List<MapState> states, int currentState) {
-        if(currentState>0){
-            miUndo.setText("Undo "+states.get(currentState).getChangeTitle());
+        if (currentState > 0) {
+            miUndo.setText("Undo " + states.get(currentState).getChangeTitle());
             miUndo.setEnabled(true);
-        }else{
+        } else {
             miUndo.setEnabled(false);
         }
-        if(states.size()-1>currentState){
-            miRedo.setText("Redo "+states.get(currentState+1).getChangeTitle());
+        if (states.size() - 1 > currentState) {
+            miRedo.setText("Redo " + states.get(currentState + 1).getChangeTitle());
             miRedo.setEnabled(true);
-        }else{
+        } else {
             miRedo.setEnabled(false);
         }
     }

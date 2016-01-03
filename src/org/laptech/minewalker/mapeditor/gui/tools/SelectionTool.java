@@ -18,12 +18,12 @@ import static java.util.logging.Logger.getLogger;
 /**
  * @author rlapin
  */
-public class SelectionTool implements Tool{
-    private static final Logger LOGGER = getLogger(SelectionTool.class.getName());
+public class SelectionTool implements Tool {
     public static final String IMAGE_PATH = "images/selectiontool.png";
     public static final String TYPE = "selection";
     public static final Color SEL_FGCOLOR = new Color(255, 0, 0, 255);
     public static final Color SEL_BGCOLOR = new Color(100, 200, 100, 50);
+    private static final Logger LOGGER = getLogger(SelectionTool.class.getName());
     private Image image;
     private EditorController editorController;
     /**
@@ -38,7 +38,7 @@ public class SelectionTool implements Tool{
         try {
             image = ImageIO.read(SelectionTool.class.getClassLoader().getResourceAsStream(IMAGE_PATH));
         } catch (IOException e) {
-            LOGGER.severe("Cannot load image "+ IMAGE_PATH);
+            LOGGER.severe("Cannot load image " + IMAGE_PATH);
         }
     }
 
@@ -54,7 +54,7 @@ public class SelectionTool implements Tool{
 
     @Override
     public void apply(double x, double y, double width, double height) {
-        editorController.getMap().selectObjects(x,y,width,height,selectionMode);
+        editorController.getMap().selectObjects(x, y, width, height, selectionMode);
 
     }
 
@@ -65,7 +65,7 @@ public class SelectionTool implements Tool{
 
     @Override
     public void apply(double x, double y) {
-        apply(x,y,1,1);
+        apply(x, y, 1, 1);
     }
 
     @Override
@@ -90,6 +90,7 @@ public class SelectionTool implements Tool{
 
     /**
      * Set new selection mode
+     *
      * @param selectionMode new selection mode
      */
     public void setSelectionMode(SelectionMode selectionMode) {

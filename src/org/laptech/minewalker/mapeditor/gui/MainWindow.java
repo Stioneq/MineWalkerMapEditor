@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 /**
  * Main window of editor <br>
  * View of MVC, editorController controller and Map is a model
+ *
  * @author rlapin
  */
 public class MainWindow {
@@ -57,12 +58,11 @@ public class MainWindow {
     }
 
 
-
     public ToolsPane getToolsPane() {
         return toolsPane;
     }
 
-    public void show(){
+    public void show() {
         frame.setVisible(true);
     }
 

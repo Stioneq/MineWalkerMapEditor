@@ -1,10 +1,10 @@
 package org.laptech.minewalker.mapeditor.gui.utils;
 
-import java.awt.Point;
 import java.awt.Rectangle;
 
 /**
  * Convert screen coordinate to physics and back
+ *
  * @author rlapin
  */
 public class PointConverter {
@@ -21,25 +21,26 @@ public class PointConverter {
 
 
     public void updateMultipliers(int width, int height, Rectangle mapBounds) {
-        kX = (mapBounds.getWidth())/width;
-        kY = (mapBounds.getHeight())/height;
+        kX = (mapBounds.getWidth()) / width;
+        kY = (mapBounds.getHeight()) / height;
         offsetX = mapBounds.getX();
         offsetY = mapBounds.getY();
     }
 
-    public int convertXToScreen(double x){
-        return (int) ((x-offsetX)/kX);
+    public int convertXToScreen(double x) {
+        return (int) ((x - offsetX) / kX);
     }
 
-    public double convertXFromScreen(int x){
-        return x*kX + offsetX;
+    public double convertXFromScreen(int x) {
+        return x * kX + offsetX;
     }
 
-    public int convertYToScreen(double y){
-        return (int) ((y-offsetY)/kY);
+    public int convertYToScreen(double y) {
+        return (int) ((y - offsetY) / kY);
     }
-    public double convertYFromScreen(int y){
-        return y*kY + offsetY;
+
+    public double convertYFromScreen(int y) {
+        return y * kY + offsetY;
     }
 
     public double getKX() {
@@ -51,18 +52,19 @@ public class PointConverter {
     }
 
 
-
     public int convertXUnitsToScreen(double value) {
-        return Math.abs(convertXToScreen(value)-convertXToScreen(0));
+        return Math.abs(convertXToScreen(value) - convertXToScreen(0));
     }
+
     public int convertYUnitsToScreen(double value) {
-        return Math.abs(convertYToScreen(value)-convertYToScreen(0));
+        return Math.abs(convertYToScreen(value) - convertYToScreen(0));
     }
 
     public double convertXUnitsFromScreen(int value) {
-        return Math.abs(convertXFromScreen(value)-convertXFromScreen(0));
+        return Math.abs(convertXFromScreen(value) - convertXFromScreen(0));
     }
+
     public double convertYUnitsFromScreen(int value) {
-        return Math.abs(convertYFromScreen(value)-convertYFromScreen(0));
+        return Math.abs(convertYFromScreen(value) - convertYFromScreen(0));
     }
 }

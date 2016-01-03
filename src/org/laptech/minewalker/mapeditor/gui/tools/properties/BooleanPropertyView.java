@@ -5,5 +5,6 @@ package org.laptech.minewalker.mapeditor.gui.tools.properties;
  */
 public interface BooleanPropertyView extends PropertyView {
     boolean getValue();
+
     void addValueChangeListener(ValueChangeListener<Boolean> onchange);
 }

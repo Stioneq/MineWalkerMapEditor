@@ -1,8 +1,6 @@
 package org.laptech.minewalker.mapeditor.gui.tools.properties;
 
 import javax.swing.JCheckBox;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.Component;
 
 /**

@@ -2,15 +2,15 @@ package org.laptech.minewalker.mapeditor.gui.tools.properties;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeListener;
 import java.awt.Component;
 
 /**
  * @author rlapin
  */
 public class SimpleIntegerPropertyView implements IntegerPropertyView {
-    private JSpinner spinner = new JSpinner(new SpinnerNumberModel(50,1,500,1));
+    private JSpinner spinner = new JSpinner(new SpinnerNumberModel(50, 1, 500, 1));
     private ValueChangeListener<Integer> changeListener;
+
     public SimpleIntegerPropertyView() {
         spinner.addChangeListener(e -> changeListener.valueChanged((Integer) spinner.getValue()));
     }

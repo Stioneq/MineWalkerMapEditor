@@ -1,11 +1,10 @@
 package org.laptech.minewalker.mapeditor.gui.tools.properties;
 
-import org.laptech.minewalker.mapeditor.gui.tools.properties.PropertyView;
-
 import java.awt.Component;
 
 /**
  * Describes different properties for tool
+ *
  * @author rlapin
  */
 public class ToolProperty {

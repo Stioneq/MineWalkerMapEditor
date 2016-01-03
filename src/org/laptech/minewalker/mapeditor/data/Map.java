@@ -54,12 +54,34 @@ public class Map {
     }
 
     /**
+     * Set objects and signal to editorController
+     *
+     * @param objects
+     */
+    public void setObjects(Set<GameObject> objects) {
+        this.objects.clear();
+        this.objects.addAll(objects);
+        editorController.mapChanged();
+    }
+
+    /**
      * Get unmodifiable set of selected gameobjects
      *
      * @return
      */
     public Set<GameObject> getSelectedObjects() {
         return Collections.unmodifiableSet(selectedObjects);
+    }
+
+    /**
+     * Set selected objects and signal to editorController
+     *
+     * @param selectedObjects
+     */
+    public void setSelectedObjects(Set<GameObject> selectedObjects) {
+        this.selectedObjects.clear();
+        this.selectedObjects.addAll(selectedObjects);
+        editorController.mapChanged();
     }
 
     /**
@@ -74,7 +96,6 @@ public class Map {
         editorController.mapChanged();
         undoRedoAction.changed();
     }
-
 
     /**
      * Paste fragments from clipboard
@@ -156,25 +177,5 @@ public class Map {
         if (isComplete) {
             mapChanged();
         }
-    }
-
-    /**
-     * Set objects and signal to editorController
-     * @param objects
-     */
-    public void setObjects(Set<GameObject> objects) {
-        this.objects.clear();
-        this.objects.addAll(objects);
-        editorController.mapChanged();
-    }
-
-    /**
-     * Set selected objects and signal to editorController
-     * @param selectedObjects
-     */
-    public void setSelectedObjects(Set<GameObject> selectedObjects) {
-        this.selectedObjects.clear();
-        this.selectedObjects.addAll(selectedObjects);
-        editorController.mapChanged();
     }
 }

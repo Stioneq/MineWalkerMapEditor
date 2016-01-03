@@ -12,6 +12,7 @@ import static java.util.logging.Logger.getLogger;
 
 /**
  * Used to saving states and to iterate by them
+ *
  * @author rlapin
  */
 public class DefaultUndoRedoAction implements UndoRedoAction {
@@ -34,27 +35,28 @@ public class DefaultUndoRedoAction implements UndoRedoAction {
         addState();
     }
 
-    public void addState(){
-        while(states.size()-1>currentState){
-            states.remove(states.size()-1);
+    public void addState() {
+        while (states.size() - 1 > currentState) {
+            states.remove(states.size() - 1);
         }
         states.add(getCurrentState());
     }
 
     private MapState getCurrentState() {
-        return new MapState(new HashSet<>(map.getObjects()),new HashSet<>(map.getSelectedObjects()),"");
+        return new MapState(new HashSet<>(map.getObjects()), new HashSet<>(map.getSelectedObjects()), "");
     }
 
     @Override
     public void undo() {
-        restoreState(states.get(currentState-1));
+        restoreState(states.get(currentState - 1));
         currentState--;
-        undoRedoHandler.onUndoRedo(states,currentState);
-        LOGGER.info("UNDO #"+currentState);
+        undoRedoHandler.onUndoRedo(states, currentState);
+        LOGGER.info("UNDO #" + currentState);
     }
 
     /**
      * Restore mapstate
+     *
      * @param mapState
      */
     private void restoreState(MapState mapState) {
@@ -64,17 +66,17 @@ public class DefaultUndoRedoAction implements UndoRedoAction {
 
     @Override
     public void redo() {
-        restoreState(states.get(currentState+1));
+        restoreState(states.get(currentState + 1));
         currentState++;
-        undoRedoHandler.onUndoRedo(states,currentState);
-        LOGGER.info("REDO #"+currentState);
+        undoRedoHandler.onUndoRedo(states, currentState);
+        LOGGER.info("REDO #" + currentState);
     }
 
     @Override
     public void changed() {
         addState();
         currentState++;
-        undoRedoHandler.onUndoRedo(states,currentState);
-        LOGGER.info("Changed #"+currentState);
+        undoRedoHandler.onUndoRedo(states, currentState);
+        LOGGER.info("Changed #" + currentState);
     }
 }

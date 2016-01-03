@@ -8,9 +8,10 @@ import java.util.Set;
 
 /**
  * Clipboard that stores gameobjects. Use with copy/cut/paste operations
+ *
  * @author rlapin
  */
-public class ClipBoard implements IClipBoard{
+public class ClipBoard implements IClipBoard {
     /**
      * Elements in clipboard
      */

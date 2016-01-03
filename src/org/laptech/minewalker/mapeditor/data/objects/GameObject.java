@@ -1,9 +1,7 @@
 package org.laptech.minewalker.mapeditor.data.objects;
 
 import org.laptech.minewalker.mapeditor.gui.tools.Drawable;
-import org.laptech.minewalker.mapeditor.gui.tools.GameObjectTool;
 
-import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
 /**
@@ -11,12 +9,13 @@ import java.awt.geom.Rectangle2D;
  *
  * @author rlapin
  */
-public abstract class GameObject implements Cloneable, HasIntersection, HasCollision{
+public abstract class GameObject implements Cloneable, HasIntersection, HasCollision {
     private static final double EPS = 1E-4;
     private Rectangle2D.Double rectangle = new Rectangle2D.Double();
     private Drawable drawable;
+
     public GameObject(double x, double y, double width, double height) {
-        rectangle.setRect(x,y,width,height);
+        rectangle.setRect(x, y, width, height);
     }
 
     public double getX() {
@@ -53,10 +52,11 @@ public abstract class GameObject implements Cloneable, HasIntersection, HasColli
 
     /**
      * append drawable
+     *
      * @param drawable
      * @return
      */
-    public GameObject with(Drawable drawable){
+    public GameObject with(Drawable drawable) {
         this.drawable = drawable;
         return this;
     }
@@ -66,11 +66,11 @@ public abstract class GameObject implements Cloneable, HasIntersection, HasColli
     }
 
     @Override
-    public boolean intersect(double x, double y,double width, double height) {
-        return rectangle.intersects(x,y,width,height);
+    public boolean intersect(double x, double y, double width, double height) {
+        return rectangle.intersects(x, y, width, height);
     }
 
-    public Rectangle2D createIntersection(double x, double y,double width, double height){
+    public Rectangle2D createIntersection(double x, double y, double width, double height) {
         return rectangle.createIntersection(new Rectangle2D.Double(x, y, width, height));
     }
 
@@ -81,8 +81,9 @@ public abstract class GameObject implements Cloneable, HasIntersection, HasColli
 
     @Override
     public boolean collide(double x, double y, double width, double height) {
-        return rectangle.contains(x,y,width,height);
+        return rectangle.contains(x, y, width, height);
     }
+
     public abstract String getType();
 
     @Override

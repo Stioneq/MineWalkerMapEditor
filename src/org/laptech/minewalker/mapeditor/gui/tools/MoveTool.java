@@ -4,7 +4,8 @@ import org.laptech.minewalker.mapeditor.gui.EditorController;
 import org.laptech.minewalker.mapeditor.gui.tools.properties.ToolProperty;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Set;
@@ -14,22 +15,25 @@ import static java.util.logging.Logger.getLogger;
 
 /**
  * Tool for moving selected objects
+ *
  * @author rlapin
  */
-public class MoveTool implements Tool{
-    private static final Logger LOGGER = getLogger(SelectionTool.class.getName());
+public class MoveTool implements Tool {
     public static final String IMAGE_PATH = "images/movetool.png";
     public static final String TYPE = "move";
+    private static final Logger LOGGER = getLogger(SelectionTool.class.getName());
     private final EditorController editorController;
     private Image image;
+
     public MoveTool(EditorController editorController) {
         this.editorController = editorController;
         try {
             image = ImageIO.read(SelectionTool.class.getClassLoader().getResourceAsStream(IMAGE_PATH));
         } catch (IOException e) {
-            LOGGER.severe("Cannot load image "+ IMAGE_PATH);
+            LOGGER.severe("Cannot load image " + IMAGE_PATH);
         }
     }
+
     @Override
     public Image getToolIcon() {
         return image;

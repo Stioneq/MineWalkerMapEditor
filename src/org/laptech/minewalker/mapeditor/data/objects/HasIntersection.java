@@ -8,6 +8,7 @@ package org.laptech.minewalker.mapeditor.data.objects;
 public interface HasIntersection {
     /**
      * Check rectangle for intersection
+     *
      * @param x      x coordinate
      * @param y      y coordinate
      * @param width

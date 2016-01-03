@@ -6,10 +6,11 @@ import javax.swing.SwingUtilities;
 
 /**
  * Launches application
+ *
  * @author rlapin
  */
 public class Launcher {
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(()->new MainWindow().show());
+        SwingUtilities.invokeLater(() -> new MainWindow().show());
     }
 }

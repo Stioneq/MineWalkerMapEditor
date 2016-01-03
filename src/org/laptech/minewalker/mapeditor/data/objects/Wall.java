@@ -1,7 +1,6 @@
 package org.laptech.minewalker.mapeditor.data.objects;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 /**
  * Wall object

@@ -1,6 +1,5 @@
 package org.laptech.minewalker.mapeditor.gui;
 
-import javafx.collections.ObservableList;
 import org.laptech.minewalker.mapeditor.data.Map;
 import org.laptech.minewalker.mapeditor.data.MapState;
 import org.laptech.minewalker.mapeditor.data.io.XMLWriter;
@@ -8,32 +7,33 @@ import org.laptech.minewalker.mapeditor.data.io.XMLWriter;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Link between Map and GUI
+ *
  * @author rlapin
  */
 public class EditorController {
     private Map map;
     private MainWindow mainWindow;
     private UndoRedoChanger undoRedoChanger;
+
     public EditorController(MainWindow window) {
         this.mainWindow = window;
         map = new Map(this);
     }
 
 
-    public void newMap(){
+    public void newMap() {
         map.getObjects().clear();
     }
 
-    public void saveMap(String filePath){
+    public void saveMap(String filePath) {
         new XMLWriter(filePath).write(map);
     }
-    public void loadMap(String filePath){
+
+    public void loadMap(String filePath) {
         new XMLWriter(filePath).write(map);
     }
 
@@ -47,10 +47,10 @@ public class EditorController {
 
 
     public void setGridSize(String s) {
-        try{
+        try {
             mainWindow.getEditorArea().getGrid().setGridSize(Integer.parseInt(s));
-        }catch (NumberFormatException e){
-            JOptionPane.showMessageDialog(null,"Incorrect number format","Error",JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Incorrect number format", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -71,7 +71,7 @@ public class EditorController {
     }
 
     public void initUndoRedoChanger(JMenuItem miUndo, JMenuItem miRedo) {
-        undoRedoChanger = new UndoRedoChanger(miUndo,miRedo);
+        undoRedoChanger = new UndoRedoChanger(miUndo, miRedo);
     }
 
 }

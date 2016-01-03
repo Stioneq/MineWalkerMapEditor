@@ -39,6 +39,7 @@ public class EditorIntersections {
 
     /**
      * add new intersection
+     *
      * @param rectangle rectangle that intersects
      */
     public void add(Rectangle rectangle) {

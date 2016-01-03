@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 
 /**
  * Editor editorArea grid
+ *
  * @author rlapin
  */
 public class EditorGrid {
@@ -41,6 +42,7 @@ public class EditorGrid {
 
     /**
      * draw horizontal lines
+     *
      * @param g
      */
     private void drawHorizontalLines(Graphics g) {
@@ -65,6 +67,7 @@ public class EditorGrid {
 
     /**
      * Draw vertical lines
+     *
      * @param g
      */
     private void drawVerticalLines(Graphics g) {
@@ -91,6 +94,7 @@ public class EditorGrid {
 
     /**
      * Set showgrid
+     *
      * @param showGrid
      */
     public void setShowGrid(boolean showGrid) {
@@ -101,6 +105,7 @@ public class EditorGrid {
 
     /**
      * Define grid size
+     *
      * @param gridSize
      */
     public void setGridSize(int gridSize) {
@@ -110,6 +115,7 @@ public class EditorGrid {
 
     /**
      * Set grid color
+     *
      * @param gridColor
      */
     public void setGridColor(Color gridColor) {

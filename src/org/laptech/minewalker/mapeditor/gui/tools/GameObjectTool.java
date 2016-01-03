@@ -6,7 +6,6 @@ import org.laptech.minewalker.mapeditor.gui.tools.properties.PropertyChangeListe
 import org.laptech.minewalker.mapeditor.gui.tools.properties.SimpleIntegerPropertyView;
 import org.laptech.minewalker.mapeditor.gui.tools.properties.ToolProperty;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 

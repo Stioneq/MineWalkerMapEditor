@@ -4,6 +4,7 @@ import java.awt.Component;
 
 /**
  * View for properties
+ *
  * @author rlapin
  */
 public interface PropertyView {

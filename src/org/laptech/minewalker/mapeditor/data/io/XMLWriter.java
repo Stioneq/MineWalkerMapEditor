@@ -20,14 +20,16 @@ import static java.util.logging.Logger.getLogger;
 
 /**
  * Write map into xml file
+ *
  * @author rlapin
  */
-public class XMLWriter implements Writer{
+public class XMLWriter implements Writer {
     private static final Logger LOGGER = getLogger(XMLWriter.class.getName());
     /**
      * Path to xml file
      */
     private String filePath;
+
     public XMLWriter(String filePath) {
         this.filePath = filePath;
     }
@@ -46,7 +48,7 @@ public class XMLWriter implements Writer{
             doc.appendChild(rootElement);
             Element mapStructureElement = doc.createElement("structure");
             rootElement.appendChild(mapStructureElement);
-            for(GameObject gameObject : map.getObjects()){
+            for (GameObject gameObject : map.getObjects()) {
                 Element gameObjectElement = doc.createElement("gameobject");
                 Attr xAttr = doc.createAttribute("x");
                 xAttr.setValue(String.valueOf(gameObject.getX()));
@@ -69,7 +71,7 @@ public class XMLWriter implements Writer{
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(System.out);
-            transformer.transform(source,result);
+            transformer.transform(source, result);
         } catch (ParserConfigurationException | TransformerException e) {
             e.printStackTrace();
         }

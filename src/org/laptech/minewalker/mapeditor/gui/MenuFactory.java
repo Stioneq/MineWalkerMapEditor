@@ -22,7 +22,8 @@ import java.io.File;
  */
 public class MenuFactory {
     public static JFileChooser fileChooser;
-    static{
+
+    static {
         fileChooser = new JFileChooser("");
         fileChooser.setFileFilter(new FileFilter() {
             @Override
@@ -36,6 +37,7 @@ public class MenuFactory {
             }
         });
     }
+
     public static JMenu createFileMenu(EditorController editorController) {
         String strMenuFile = "File";
         String strMINew = "New";
@@ -48,21 +50,21 @@ public class MenuFactory {
         JMenuItem miSave = new JMenuItem(strMISave);
         miSave.addActionListener(event -> {
 
-            if(fileChooser.showSaveDialog(null)==JFileChooser.APPROVE_OPTION){
-                editorController.saveMap(fileChooser.getSelectedFile().getPath()+".map");
+            if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                editorController.saveMap(fileChooser.getSelectedFile().getPath() + ".map");
             }
 
         });
         JMenuItem miOpen = new JMenuItem(strMIOpen);
         miOpen.addActionListener(event -> {
 
-            if(fileChooser.showOpenDialog(null)==JFileChooser.APPROVE_OPTION){
+            if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 editorController.loadMap(fileChooser.getSelectedFile().getPath());
             }
 
         });
         JMenuItem miExit = new JMenuItem(strMIExit);
-        miExit.addActionListener(event->System.exit(0));
+        miExit.addActionListener(event -> System.exit(0));
         menuFile.add(miNew);
         menuFile.add(miSave);
         menuFile.add(miOpen);
@@ -133,7 +135,7 @@ public class MenuFactory {
         });
         miPaste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
         JMenuItem miDelete = new JMenuItem(strMIDelete);
-        miDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,0));
+        miDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
         miDelete.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -147,12 +149,12 @@ public class MenuFactory {
         menuEdit.add(miCopy);
         menuEdit.add(miPaste);
         menuEdit.add(miDelete);
-        setupUndoRedo(editorController,miUndo,miRedo);
+        setupUndoRedo(editorController, miUndo, miRedo);
         return menuEdit;
     }
 
     private static void setupUndoRedo(EditorController editorController, JMenuItem miUndo, JMenuItem miRedo) {
-        editorController.initUndoRedoChanger(miUndo,miRedo);
+        editorController.initUndoRedoChanger(miUndo, miRedo);
     }
 
     public static JMenu createViewMenu(EditorController editorController) {

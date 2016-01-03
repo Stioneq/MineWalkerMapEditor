@@ -16,17 +16,18 @@ import static java.util.logging.Logger.getLogger;
  * @author rlapin
  */
 public class FloorTool extends GameObjectTool {
-    private static final Logger LOGGER = getLogger(SelectionTool.class.getName());
     public static final String IMAGE_PATH = "images/floortool.png";
     public static final String TYPE = "floor";
+    private static final Logger LOGGER = getLogger(SelectionTool.class.getName());
     private Image image;
+
     public FloorTool(EditorController editorController) {
         super(editorController);
         try {
             image = ImageIO.read(SelectionTool.class.getClassLoader().getResourceAsStream(IMAGE_PATH));
-            
+
         } catch (IOException e) {
-            LOGGER.severe("Cannot load image "+ IMAGE_PATH);
+            LOGGER.severe("Cannot load image " + IMAGE_PATH);
         }
     }
 
@@ -51,9 +52,8 @@ public class FloorTool extends GameObjectTool {
     }
 
 
-
     @Override
     public void draw(Graphics g, int x, int y, int width, int height) {
-        g.drawImage(image,x, y, width, height,null);
+        g.drawImage(image, x, y, width, height, null);
     }
 }

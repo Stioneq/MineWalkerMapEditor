@@ -6,8 +6,12 @@ import java.util.List;
 
 /**
  * Event when undo or redo fired
+ *
  * @author rlapin
  */
 public interface UndoRedoHandler {
-    default void onUndoRedo(List<MapState> states, int curState){};
+    default void onUndoRedo(List<MapState> states, int curState) {
+    }
+
+    ;
 }

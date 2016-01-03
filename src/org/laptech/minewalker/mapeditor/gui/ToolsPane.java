@@ -3,7 +3,6 @@ package org.laptech.minewalker.mapeditor.gui;
 import org.laptech.minewalker.mapeditor.gui.tools.Tool;
 import org.laptech.minewalker.mapeditor.gui.tools.ToolChangeListener;
 import org.laptech.minewalker.mapeditor.gui.tools.ToolFactory;
-import org.laptech.minewalker.mapeditor.gui.tools.properties.PropertyChangeListener;
 import org.laptech.minewalker.mapeditor.gui.utils.ComponentUtils;
 
 import javax.swing.BorderFactory;
@@ -30,11 +29,10 @@ import java.util.List;
  */
 public class ToolsPane extends JPanel {
     public static final Color ROLLOVER_COLOR = new Color(120, 255, 120, 50);
-    private static final Color PRESSED_COLOR = new Color(120, 255, 120, 100);
-    ;
-    private List<ToolChangeListener> listeners = new ArrayList<>();
-
     public static final Dimension BTN_SIZE = new Dimension(32, 32);
+    ;
+    private static final Color PRESSED_COLOR = new Color(120, 255, 120, 100);
+    private List<ToolChangeListener> listeners = new ArrayList<>();
     private EditorController controller;
     private SettingsPanel settingsPanel;
 

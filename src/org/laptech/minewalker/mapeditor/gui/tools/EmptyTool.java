@@ -9,6 +9,7 @@ import java.util.Set;
 
 /**
  * NULL tool
+ *
  * @author rlapin
  */
 public class EmptyTool implements Tool {

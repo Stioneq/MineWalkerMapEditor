@@ -4,12 +4,14 @@ import java.awt.Graphics;
 
 /**
  * Availability to draw gameobject on the canvas
+ *
  * @author rlapin
  */
 public interface Drawable {
     /**
      * Draw object
-     * @param g Graphics context
+     *
+     * @param g      Graphics context
      * @param x
      * @param y
      * @param width

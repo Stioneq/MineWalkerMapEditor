@@ -1,7 +1,6 @@
 package org.laptech.minewalker.mapeditor.gui.tools;
 
 import org.laptech.minewalker.mapeditor.gui.EditorController;
-import org.laptech.minewalker.mapeditor.gui.tools.properties.PropertyChangeListener;
 
 /**
  * Factory for creating editor tools
@@ -12,8 +11,8 @@ public class ToolFactory {
     private final FloorTool FLOOR_TOOL;
     private final WallTool WALL_TOOL;
     private final MoveTool MOVE_TOOL;
-    private EditorController editorController;
     private final SelectionTool SELECTION_TOOL;
+    private EditorController editorController;
 
     public ToolFactory(EditorController controller) {
         this.editorController = controller;
