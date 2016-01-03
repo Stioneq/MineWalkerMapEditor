@@ -1,8 +1,6 @@
 package org.laptech.minewalker.mapeditor.gui;
 
 import org.laptech.minewalker.mapeditor.gui.editorarea.EditorArea;
-import org.laptech.minewalker.mapeditor.gui.tools.Tool;
-import org.laptech.minewalker.mapeditor.gui.tools.ToolChangeListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -35,12 +33,7 @@ public class MainWindow {
         frame.add(createMenuBar(), BorderLayout.NORTH);
         editorArea = new EditorArea(this);
         toolsPane = new ToolsPane(controller);
-        toolsPane.addToolChangeListener(new ToolChangeListener() {
-            @Override
-            public void onToolChanged(Tool tool) {
-                editorArea.setCurrentTool(tool);
-            }
-        });
+        toolsPane.addToolChangeListener(editorArea::setCurrentTool);
         frame.add(editorArea, BorderLayout.CENTER);
         frame.add(toolsPane, BorderLayout.EAST);
 

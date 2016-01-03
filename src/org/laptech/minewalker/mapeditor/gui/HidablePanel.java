@@ -3,14 +3,18 @@ package org.laptech.minewalker.mapeditor.gui;
 import org.laptech.minewalker.mapeditor.gui.utils.ComponentUtils;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -85,11 +89,61 @@ public class HidablePanel extends JPanel {
         label.setIcon(IMAGE_MINUS);
         label.setForeground(FGCOLOR);
         labelPanel.add(label);
+
         labelPanel.addMouseListener(new MouseAdapter() {
+            Timer timer;
+            int tempHeight;
+            boolean isResizing;
+
             @Override
             public void mouseClicked(MouseEvent e) {
-                hidablePane.setVisible(!hidablePane.isVisible());
-                label.setIcon(hidablePane.isVisible()?IMAGE_MINUS:IMAGE_PLUS);
+                if (!isResizing) {
+                    isResizing = true;
+                    boolean isCollapse = hidablePane.isVisible();
+                    if (isCollapse) {
+                        tempHeight = hidablePane.getHeight();
+                    }
+                    timer = new Timer(5, new AbstractAction() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            if (isCollapse) {
+                                collapse();
+                            } else {
+                                hidablePane.setVisible(true);
+                                expand();
+
+                            }
+
+                        }
+
+                        private void expand() {
+                            if (hidablePane.getHeight() < tempHeight) {
+                                hidablePane.setPreferredSize(new Dimension(hidablePane.getWidth(), hidablePane.getHeight() + 1));
+                                hidablePane.setMaximumSize(new Dimension(hidablePane.getWidth(), hidablePane.getHeight() + 1));
+                                hidablePane.revalidate();
+                            } else {
+                                label.setIcon(IMAGE_MINUS);
+                                timer.stop();
+                                isResizing = false;
+                            }
+                        }
+
+                        private void collapse() {
+                            if (hidablePane.getHeight() != 0) {
+                                hidablePane.setPreferredSize(new Dimension(hidablePane.getWidth(), hidablePane.getHeight() - 1));
+                                hidablePane.setMaximumSize(new Dimension(hidablePane.getWidth(), hidablePane.getHeight() - 1));
+                                hidablePane.revalidate();
+                            } else {
+                                hidablePane.setVisible(false);
+                                label.setIcon(IMAGE_PLUS);
+                                timer.stop();
+                                isResizing = false;
+                            }
+                        }
+                    });
+                    timer.start();
+                }
+
             }
         });
         return labelPanel;
