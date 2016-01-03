@@ -18,7 +18,7 @@ public abstract class GameObjectTool implements Tool {
 
     @Override
     public void apply(double x, double y, double width, double height) {
-        editorController.getMap().getObjects().add(getObject(x,y,getWidth(),getHeight()).with(this));
+        editorController.getMap().addGameObject(getObject(x,y,getWidth(),getHeight()).with(this));
     }
 
     @Override

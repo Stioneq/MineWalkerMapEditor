@@ -1,8 +1,11 @@
 package org.laptech.minewalker.mapeditor.gui;
 
+import javafx.collections.ObservableList;
 import org.laptech.minewalker.mapeditor.data.Map;
+import org.laptech.minewalker.mapeditor.data.MapState;
 import org.laptech.minewalker.mapeditor.data.io.XMLWriter;
 
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -16,7 +19,7 @@ import java.util.List;
 public class EditorController {
     private Map map;
     private MainWindow mainWindow;
-
+    private UndoRedoChanger undoRedoChanger;
     public EditorController(MainWindow window) {
         this.mainWindow = window;
         map = new Map(this);
@@ -63,4 +66,11 @@ public class EditorController {
     }
 
 
+    public void mapStateChanged(List<MapState> states, int currentState) {
+        undoRedoChanger.update(states,currentState);
+    }
+
+    public void initUndoRedoChanger(JMenuItem miUndo, JMenuItem miRedo) {
+        undoRedoChanger = new UndoRedoChanger(miUndo,miRedo);
+    }
 }

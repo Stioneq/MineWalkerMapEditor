@@ -145,7 +145,12 @@ public class MenuFactory {
         menuEdit.add(miCopy);
         menuEdit.add(miPaste);
         menuEdit.add(miDelete);
+        setupUndoRedo(editorController,miUndo,miRedo);
         return menuEdit;
+    }
+
+    private static void setupUndoRedo(EditorController editorController, JMenuItem miUndo, JMenuItem miRedo) {
+        editorController.initUndoRedoChanger(miUndo,miRedo);
     }
 
     public static JMenu createViewMenu(EditorController editorController) {

@@ -11,7 +11,7 @@ import java.awt.geom.Rectangle2D;
  *
  * @author rlapin
  */
-public abstract class GameObject implements HasIntersection, HasCollision{
+public abstract class GameObject implements Cloneable, HasIntersection, HasCollision{
     private static final double EPS = 1E-4;
     private Rectangle2D.Double rectangle = new Rectangle2D.Double();
     private Drawable drawable;
@@ -85,4 +85,8 @@ public abstract class GameObject implements HasIntersection, HasCollision{
     }
     public abstract String getType();
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

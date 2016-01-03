@@ -51,20 +51,7 @@ public class SelectionTool implements Tool{
 
     @Override
     public void apply(double x, double y, double width, double height) {
-        Map map = editorController.getMap();
-        Set<GameObject> selectedObjects = map.getSelectedObjects();
-        if(selectionMode == SelectionMode.NEW_SELECTION) {
-            selectedObjects.clear();
-        }
-        for(GameObject object : map.getObjects()){
-            if(object.intersect(x,y,width,height)){
-                if(selectionMode == SelectionMode.ADDITIONAL_SELECTION && selectedObjects.contains(object)){
-                    selectedObjects.remove(object);
-                }else {
-                    selectedObjects.add(object);
-                }
-            }
-        }
+        editorController.getMap().selectObjects(x,y,width,height,selectionMode);
 
     }
 
