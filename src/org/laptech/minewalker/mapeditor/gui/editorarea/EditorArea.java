@@ -8,6 +8,8 @@ import org.laptech.minewalker.mapeditor.gui.tools.GameObjectTool;
 import org.laptech.minewalker.mapeditor.gui.tools.SelectionTool;
 import org.laptech.minewalker.mapeditor.gui.tools.Tool;
 import org.laptech.minewalker.mapeditor.gui.utils.PointConverter;
+import org.laptech.minewalker.mapeditor.media.SoundList;
+import org.laptech.minewalker.mapeditor.media.SoundPlayer;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -43,6 +45,14 @@ public class EditorArea extends JPanel {
     public static final EmptyTool EMPTY_TOOL = new EmptyTool();
     public static final Cursor SEL_CURSOR = new Cursor(Cursor.CROSSHAIR_CURSOR);
     private static final Logger LOGGER = getLogger(EditorArea.class.getName());
+    /**
+     * Multiplicor for distance using in magnetized
+     */
+    public static final double magneticMul = 0.1;
+    /**
+     * if true objects is magnetized to grid
+     */
+    private boolean isMagnets = true;
     private static final Cursor MOVE_CURSOR = new Cursor(Cursor.MOVE_CURSOR);
     /**
      * Used while displaying game object brush
@@ -122,10 +132,6 @@ public class EditorArea extends JPanel {
                         } else {
                             currentTool.apply(pointConverter.convertXFromScreen(e.getX()), pointConverter.convertYFromScreen(e.getY()));
                         }
-                    } else if (isGameObjectTool()) {
-                        if (!isIntersect(e.getX(), e.getY())) {
-                            currentTool.apply(pointConverter.convertXFromScreen(e.getX() - toolWidth / 2), pointConverter.convertYFromScreen(e.getY() - toolHeight / 2));
-                        }
                     }
                     isSelection = false;
                     repaint();
@@ -137,6 +143,38 @@ public class EditorArea extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 isMove = false;
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    if (isGameObjectTool()) {
+                        double realX = pointConverter.convertXFromScreen(e.getX());
+                        double realY = pointConverter.convertYFromScreen(e.getY());
+                        double width = ((GameObjectTool) currentTool).getWidth();
+                        double height = ((GameObjectTool) currentTool).getHeight();
+                        if(isMagnets){
+
+                            int modX = (int) (realX - width / 2) % grid.getGridSize();
+                            int modY = (int) (realY - height / 2) % grid.getGridSize();
+                            if(modX <grid.getGridSize()* magneticMul){
+                                realX = (int)realX-modX;
+                            }else if(modX > grid.getGridSize()*(1-magneticMul)){
+                                realX = (int)realX+(grid.getGridSize()-modX);
+                            }
+                            if(modY <grid.getGridSize()* magneticMul){
+                                realY = (int)realY-modY;
+                            }else if(modY > grid.getGridSize()*(1-magneticMul)){
+                                realY = (int)realY+(grid.getGridSize()-modY);
+                            }
+
+
+                        }
+                        if (!isIntersect(pointConverter.convertXToScreen(realX),pointConverter.convertYToScreen(realY))) {
+                            currentTool.apply(realX-width/2, realY-height/2);
+                        }else{
+                            System.out.println(realX+":"+realY);
+                        }
+                       repaint();
+                    }
+
+                }
             }
 
             @Override
@@ -182,6 +220,29 @@ public class EditorArea extends JPanel {
                     double realY = pointConverter.convertYFromScreen(e.getY());
                     double width = ((GameObjectTool) currentTool).getWidth();
                     double height = ((GameObjectTool) currentTool).getHeight();
+                    if(isMagnets){
+                        boolean checkMagnet = false;
+                        int modX = (int) (realX - width / 2) % grid.getGridSize();
+                        int modY = (int) (realY - height / 2) % grid.getGridSize();
+                        if(modX <grid.getGridSize()* magneticMul){
+                           realX = (int)realX-modX;
+                            checkMagnet = true;
+                        }else if(modX > grid.getGridSize()*(1-magneticMul)){
+                            realX = (int)realX+(grid.getGridSize()-modX);
+                            checkMagnet = true;
+                        }
+                        if(modY <grid.getGridSize()* magneticMul){
+                            realY = (int)realY-modY;
+                            checkMagnet = true;
+                        }else if(modY > grid.getGridSize()*(1-magneticMul)){
+                            realY = (int)realY+(grid.getGridSize()-modY);
+                            checkMagnet = true;
+                        }
+                        if(checkMagnet)
+                            SoundPlayer.playsound(SoundList.MAGNET_SOUND);
+
+
+                    }
                     interArea.clear();
                     Set<GameObject> objects = mainWindow.getController().getMap().getObjects();
                     for (GameObject gameObject : objects) {
@@ -190,7 +251,7 @@ public class EditorArea extends JPanel {
                             interArea.add(new Rectangle(pointConverter.convertXToScreen(intersection.getX()), pointConverter.convertYToScreen(intersection.getY()), pointConverter.convertXUnitsToScreen(intersection.getWidth()), pointConverter.convertYUnitsToScreen(intersection.getHeight())));
                         }
                     }
-                    brushPoint.setLocation(e.getX(), e.getY());
+                    brushPoint.setLocation(pointConverter.convertXToScreen(realX), pointConverter.convertYToScreen(realY));
                     repaint();
                 }
 
@@ -277,11 +338,11 @@ public class EditorArea extends JPanel {
      * @param sY screen y
      * @return true if brush intersects figures
      */
-    private boolean isIntersect(double sX, double sY) {
-        double realX = pointConverter.convertXFromScreen((int) sX);
-        double realY = pointConverter.convertYFromScreen((int) sY);
-        double width = ((GameObjectTool) currentTool).getWidth();
-        double height = ((GameObjectTool) currentTool).getHeight();
+    private boolean isIntersect(int sX, int sY) {
+        double realX = pointConverter.convertXFromScreen(sX+1);
+        double realY = pointConverter.convertYFromScreen(sY+1);
+        double width = ((GameObjectTool) currentTool).getWidth()-2;
+        double height = ((GameObjectTool) currentTool).getHeight()-2;
         Set<GameObject> objects = mainWindow.getController().getMap().getObjects();
         for (GameObject gameObject : objects) {
             if (gameObject.intersect(realX - width / 2, realY - height / 2, width, height)) {
@@ -386,5 +447,9 @@ public class EditorArea extends JPanel {
 
     public Rectangle getMapBounds() {
         return mapBounds;
+    }
+
+    public void setMagnetized(boolean isMagnets) {
+        this.isMagnets = isMagnets;
     }
 }

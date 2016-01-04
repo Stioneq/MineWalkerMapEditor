@@ -79,4 +79,12 @@ public class DefaultUndoRedoAction implements UndoRedoAction {
         undoRedoHandler.onUndoRedo(states, currentState);
         LOGGER.info("Changed #" + currentState);
     }
+
+    @Override
+    public void reset() {
+        states.clear();
+        currentState = 0;
+        addState();
+        undoRedoHandler.onUndoRedo(states,currentState);
+    }
 }

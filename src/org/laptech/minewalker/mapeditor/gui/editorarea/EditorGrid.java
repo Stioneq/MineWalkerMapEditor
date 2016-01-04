@@ -123,4 +123,7 @@ public class EditorGrid {
         editorArea.repaint();
     }
 
+    public int getGridSize() {
+        return gridSize;
+    }
 }

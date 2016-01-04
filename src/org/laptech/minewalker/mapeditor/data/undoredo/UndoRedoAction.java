@@ -20,4 +20,9 @@ public interface UndoRedoAction {
      * Applies when some changes happends
      */
     void changed();
+
+    /**
+     * Reset undoredo states
+     */
+    void reset();
 }

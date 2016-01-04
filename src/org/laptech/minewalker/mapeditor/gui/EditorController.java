@@ -26,7 +26,7 @@ public class EditorController {
 
 
     public void newMap() {
-        map.getObjects().clear();
+        map.clear();
     }
 
     public void saveMap(String filePath) {
@@ -74,4 +74,8 @@ public class EditorController {
         undoRedoChanger = new UndoRedoChanger(miUndo, miRedo);
     }
 
+
+    public void setMagnetized(boolean selected) {
+        mainWindow.getEditorArea().setMagnetized(selected);
+    }
 }

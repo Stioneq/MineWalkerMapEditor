@@ -193,4 +193,11 @@ public class Map {
             editorController.mapChanged();
         }
     }
+
+    public void clear() {
+        objects.clear();
+        selectedObjects.clear();
+        undoRedoAction.reset();
+        editorController.mapChanged();
+    }
 }

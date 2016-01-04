@@ -9,4 +9,6 @@ public interface IClipBoard {
     void paste();
 
     void copy();
+
+
 }

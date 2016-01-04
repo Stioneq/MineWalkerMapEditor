@@ -82,6 +82,7 @@ public class MenuFactory {
         String strMIDelete = "Delete";
         String strMIPaste = "Paste";
         String strMISelAll = "Select all";
+        String strMIMagnetized = "Magnet on";
         JMenu menuEdit = new JMenu(strMenuEdit);
         JMenuItem miUndo = new JMenuItem(strMIUndo);
         miUndo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_MASK));
@@ -142,6 +143,15 @@ public class MenuFactory {
                 editorController.getMap().removeSelected();
             }
         });
+        JCheckBoxMenuItem chbMIMagnetOn = new JCheckBoxMenuItem(strMIMagnetized);
+        chbMIMagnetOn.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M,InputEvent.CTRL_MASK));
+        chbMIMagnetOn.setSelected(true);
+        chbMIMagnetOn.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editorController.setMagnetized(chbMIMagnetOn.isSelected());
+            }
+        });
         menuEdit.add(miUndo);
         menuEdit.add(miRedo);
         menuEdit.add(miSelAll);
@@ -149,6 +159,7 @@ public class MenuFactory {
         menuEdit.add(miCopy);
         menuEdit.add(miPaste);
         menuEdit.add(miDelete);
+        menuEdit.add(chbMIMagnetOn);
         setupUndoRedo(editorController, miUndo, miRedo);
         return menuEdit;
     }

@@ -32,6 +32,7 @@ public class ToolsPane extends JPanel {
     public static final Dimension BTN_SIZE = new Dimension(32, 32);
     ;
     private static final Color PRESSED_COLOR = new Color(120, 255, 120, 100);
+    public static final Color BGCOLOR = new Color(204, 204, 204);
     private List<ToolChangeListener> listeners = new ArrayList<>();
     private EditorController controller;
     private SettingsPanel settingsPanel;
@@ -114,9 +115,7 @@ public class ToolsPane extends JPanel {
         JPanel contentPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
         ToolFactory factory = new ToolFactory(controller);
         contentPanel.setOpaque(true);
-
-        Color bgColor = new Color(204, 204, 204);
-        contentPanel.setBackground(bgColor);
+        contentPanel.setBackground(BGCOLOR);
         contentPanel.add(createToolButton(factory.createFloorTool(), group));
         contentPanel.add(createToolButton(factory.createWallTool(), group));
         contentPanel.add(createToolButton(factory.createDoorTool(), group));
@@ -133,8 +132,7 @@ public class ToolsPane extends JPanel {
         JPanel contentPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
         ToolFactory factory = new ToolFactory(controller);
         contentPanel.setOpaque(true);
-        Color bgColor = new Color(204, 204, 204);
-        contentPanel.setBackground(bgColor);
+        contentPanel.setBackground(BGCOLOR);
         contentPanel.add(createToolButton(factory.createSelectionTool(), group));
         contentPanel.add(createToolButton(factory.createMoveTool(), group));
         return contentPanel;
