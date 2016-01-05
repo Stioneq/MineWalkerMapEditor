@@ -2,6 +2,7 @@ package org.laptech.minewalker.mapeditor.gui;
 
 import org.laptech.minewalker.mapeditor.data.Map;
 import org.laptech.minewalker.mapeditor.data.MapState;
+import org.laptech.minewalker.mapeditor.data.io.XMLReader;
 import org.laptech.minewalker.mapeditor.data.io.XMLWriter;
 
 import javax.swing.JMenuItem;
@@ -34,7 +35,9 @@ public class EditorController {
     }
 
     public void loadMap(String filePath) {
-        new XMLWriter(filePath).write(map);
+        map = new XMLReader(filePath).read();
+
+
     }
 
     public Map getMap() {
@@ -78,4 +81,6 @@ public class EditorController {
     public void setMagnetized(boolean selected) {
         mainWindow.getEditorArea().setMagnetized(selected);
     }
+
+
 }

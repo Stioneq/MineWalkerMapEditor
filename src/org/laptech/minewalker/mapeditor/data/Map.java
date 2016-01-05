@@ -33,9 +33,15 @@ public class Map {
     private UndoRedoAction undoRedoAction;
     private EditorController editorController;
 
-
+    public Map(Set<GameObject> gameObjects){
+        this.objects.addAll(gameObjects);
+    }
     public Map(EditorController editorController) {
         this.editorController = editorController;
+        initUndoRedoAction(editorController);
+    }
+
+    private void initUndoRedoAction(final EditorController editorController) {
         undoRedoAction = new DefaultUndoRedoAction(this, new UndoRedoHandler() {
             @Override
             public void onUndoRedo(List<MapState> states, int curState) {
@@ -199,5 +205,10 @@ public class Map {
         selectedObjects.clear();
         undoRedoAction.reset();
         editorController.mapChanged();
+    }
+
+    public void setEditorController(EditorController editorController) {
+        this.editorController = editorController;
+        initUndoRedoAction(editorController);
     }
 }

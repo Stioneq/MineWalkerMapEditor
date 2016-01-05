@@ -8,8 +8,7 @@ import org.laptech.minewalker.mapeditor.gui.tools.GameObjectTool;
 import org.laptech.minewalker.mapeditor.gui.tools.SelectionTool;
 import org.laptech.minewalker.mapeditor.gui.tools.Tool;
 import org.laptech.minewalker.mapeditor.gui.utils.PointConverter;
-import org.laptech.minewalker.mapeditor.media.SoundList;
-import org.laptech.minewalker.mapeditor.media.SoundPlayer;
+
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -238,8 +237,7 @@ public class EditorArea extends JPanel {
                             realY = (int)realY+(grid.getGridSize()-modY);
                             checkMagnet = true;
                         }
-                        if(checkMagnet)
-                            SoundPlayer.playsound(SoundList.MAGNET_SOUND);
+
 
 
                     }

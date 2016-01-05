@@ -28,7 +28,7 @@ public class MenuFactory {
         fileChooser.setFileFilter(new FileFilter() {
             @Override
             public boolean accept(File f) {
-                return f.getName().endsWith(".map");
+                return f.isDirectory() || f.getName().endsWith(".map");
             }
 
             @Override
@@ -51,7 +51,11 @@ public class MenuFactory {
         miSave.addActionListener(event -> {
 
             if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-                editorController.saveMap(fileChooser.getSelectedFile().getPath() + ".map");
+                String path = fileChooser.getSelectedFile().getPath();
+                if(!path.endsWith(".map")){
+                    path = path.concat(".map");
+                }
+                editorController.saveMap(path);
             }
 
         });

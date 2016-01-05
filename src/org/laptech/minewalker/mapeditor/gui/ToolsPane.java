@@ -118,7 +118,9 @@ public class ToolsPane extends JPanel {
         contentPanel.setBackground(BGCOLOR);
         contentPanel.add(createToolButton(factory.createFloorTool(), group));
         contentPanel.add(createToolButton(factory.createWallTool(), group));
+        contentPanel.add(createToolButton(factory.createSpikedFloorTool(), group));
         contentPanel.add(createToolButton(factory.createDoorTool(), group));
+        contentPanel.add(createToolButton(factory.createTriggerPointTool(), group));
         return contentPanel;
     }
 
